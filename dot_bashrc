@@ -21,13 +21,6 @@ shopt -s globstar 2> /dev/null
 # be corrected
 shopt -s cdspell
 
-# editor
-if type vim &>/dev/null; then
-    export EDITOR=vim
-else
-    export EDITOR=vi
-fi
-
 # ls
 case $(uname) in
     Darwin)

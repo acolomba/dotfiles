@@ -7,7 +7,7 @@ export HISTCONTROL="erasedups:ignoredups:ignorespace"
 export HISTIGNORE="bg:fg:rm *:exit"
 
 # editor
-if type vim >/dev/null; then
+if type vim &>/dev/null; then
     export EDITOR=vim
 else
     export EDITOR=vi
