@@ -72,8 +72,9 @@ man() {
     man "$@"
 }
 
-# screen
+# screen and tmux
 alias scr="screen -d -RR"
+alias t="tmux new -A -D -s main"
 
 # prompt
 
