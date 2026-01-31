@@ -41,12 +41,12 @@ esac
 export LESS="-FRXi"
 
 # lesspipe
-if type lesspipe &>/dev/null; then
+if command -v lesspipe &>/dev/null; then
     eval $(lesspipe) &>/dev/null
-elif type lesspipe.sh &>/dev/null; then
+elif command -v lesspipe.sh &>/dev/null; then
     export LESSOPEN="| $(brew --prefix)/bin/lesspipe.sh %s"
     export LESS_ADVANCED_PREPROCESSOR=1
-elif type src-hilite-lesspipe.sh &>/dev/null; then
+elif command -v src-hilite-lesspipe.sh &>/dev/null; then
     export LESSOPEN="| src-hilite-lesspipe.sh %s"
 elif [[ -f /usr/share/source-highlight/src-hilite-lesspipe.sh ]]; then
     export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
@@ -107,13 +107,13 @@ case $TERM in
         ;;
 esac
 # direnv
-if type direnv &>/dev/null; then
+if command -v direnv &>/dev/null; then
     eval "$(direnv hook bash)"
     export DIRENV_LOG_FORMAT=
 fi
 
 # fzf
-if type fzf &>/dev/null && type fdfind &>/dev/null && [[ $- == *i* ]]; then
+if command -v fzf &>/dev/null && command -v fdfind &>/dev/null && [[ $- == *i* ]]; then
     case $(uname) in
         Darwin)
             eval "$(fzf --bash)"
@@ -125,18 +125,8 @@ if type fzf &>/dev/null && type fdfind &>/dev/null && [[ $- == *i* ]]; then
     esac
 fi
 
-# autojump
-case $(uname) in
-    Darwin)
-        [[ -f $(brew --prefix)/etc/profile.d/autojump.sh ]] \
-            && . $(brew --prefix)/etc/profile.d/autojump.sh
-        ;;
-
-    Linux)
-        [[ -f /usr/share/autojump/autojump.sh ]] \
-            && . /usr/share/autojump/autojump.sh
-        ;;
-esac
+# zoxide
+command -v zoxide &>/dev/null && eval "$(zoxide init --cmd j bash)"
 
 # completion; this runs only on 4+
 if (( $BASH_VERSINFO >= 4 )); then
