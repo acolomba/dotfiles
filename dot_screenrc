@@ -7,4 +7,3 @@ hardstatus string "%{.bW}%-w%{.rW}%n %t%{-}%+w %=%{..G} %H %{..Y} %m/%d %C%a "
 # bash
 shelltitle "$|bash"
 setenv PROMPT_COMMAND='echo -n -e "\033k\033\134"'
-

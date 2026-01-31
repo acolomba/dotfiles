@@ -70,18 +70,7 @@ alias scr="screen -d -RR"
 alias t="tmux new -A -D -s main"
 
 # prompt
-
-# username@host for other accounts
-prompt_host="\u@\h"
-
-# shortens prompt_host if known username
-usernames=( acolomba )
-for username in "${usernames[@]}"; do
-    if [[ $USER = $username ]]; then
-        # only host for my account
-        prompt_host="\h"
-    fi
-done
+prompt_host="\h"
 
 # suffix depends on identity
 if [[ $(id -u) == 0 ]]; then
@@ -142,5 +131,6 @@ if (( $BASH_VERSINFO >= 4 )); then
     esac
 fi
 
+# shellcheck source=/dev/null
 # sources local bashrc
-[[ -r ~/.bashrc_local ]] && . ~/.bashrc_local
+[[ -r ~/.bashrc-local ]] && . ~/.bashrc-local

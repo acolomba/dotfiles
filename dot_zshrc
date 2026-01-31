@@ -188,7 +188,3 @@ esac
 
 # sources local zshrc
 [[ -f ~/.zsh/zshrc-local.zsh ]] && . ~/.zsh/zshrc-local.zsh
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/Users/acolomba/.sdkman"
-[[ -s "/Users/acolomba/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/acolomba/.sdkman/bin/sdkman-init.sh"

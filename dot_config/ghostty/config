@@ -30,5 +30,5 @@ window-show-tab-bar = always
 window-theme = system
 window-height = 40
 window-width = 132
-working-directory = home
 window-inherit-working-directory = false
+working-directory = home

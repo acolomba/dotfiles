@@ -16,12 +16,10 @@ fi
 # less
 export LESS="-FRXi"
 
+# shellcheck source=/dev/null
 # sources local profile
-[[ -r ~/.bash_profile_local ]] && . ~/.bash_profile_local
+[[ -r ~/.bash_profile-local ]] && . ~/.bash_profile-local
 
+# shellcheck source=/dev/null
 # sources bashrc for interactive login shells
 [[ $- == *i* ]] && [[ -f ~/.bashrc ]] && shopt login_shell >/dev/null && . ~/.bashrc
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/Users/acolomba/.sdkman"
-[[ -s "/Users/acolomba/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/acolomba/.sdkman/bin/sdkman-init.sh"
