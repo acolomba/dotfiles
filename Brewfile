@@ -24,6 +24,7 @@ brew "mosh"
 brew "nethack"
 brew "nmap"
 brew "python3"
+brew "pandoc"
 brew "ripgrep"
 brew "tig"
 brew "tree"
@@ -84,6 +85,7 @@ cask "ringcentral"
 cask "scummvm"
 cask "scummvm-app"
 cask "steam"
+cask "stillcolor"
 cask "sublime-merge"
 cask "sublime-text"
 cask "viscosity"
@@ -116,5 +118,7 @@ mas "SiteSucker", id: 442168834
 mas "Slack", id: 803453959
 mas "SponsorBlock", id: 1573461917
 mas "StopTheMadness Pro", id: 6471380298
+mas "Telegram", id: 747648890
 mas "The Unarchiver", id: 425424353
 mas "Windows App", id: 1295203466
+mas "WireGuard", id: 1451685025
