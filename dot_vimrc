@@ -26,7 +26,9 @@ set encoding=utf-8 nobomb
 set number
 
 " enables syntax highlighting
-syntax on
+if has('syntax')
+  syntax on
+endif
 
 " highlights current line
 set cursorline
