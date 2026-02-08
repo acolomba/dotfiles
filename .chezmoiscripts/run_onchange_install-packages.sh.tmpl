@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Brewfile hash: {{ include "Brewfile" | sha256sum }}
+# Dnffile hash: {{ include "Dnffile" | sha256sum }}
+
+case $(uname) in
+    Darwin)
+        if type brew &>/dev/null; then
+            brew bundle --file ~/.local/share/chezmoi/Brewfile
+        fi
+        ;;
+
+    Linux)
+        if [[ -f /etc/fedora-release ]] && type dnf &>/dev/null; then
+            sudo dnf install -y $(<~/.local/share/chezmoi/Dnffile)
+        fi
+        ;;
+esac
