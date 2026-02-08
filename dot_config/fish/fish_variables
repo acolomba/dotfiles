@@ -2,8 +2,9 @@
 # VERSION: 3.0
 SETUVAR __fish_initialized:4300
 SETUVAR _fisher_aohorodnyk_2F_fish_2D_autovenv_files:\x7e/\x2econfig/fish/conf\x2ed/autovenv\x2efish
+SETUVAR _fisher_edc_2F_bass_files:\x7e/\x2econfig/fish/functions/__bass\x2epy\x1e\x7e/\x2econfig/fish/functions/bass\x2efish
 SETUVAR _fisher_jorgebucaran_2F_hydro_files:\x7e/\x2econfig/fish/functions/fish_mode_prompt\x2efish\x1e\x7e/\x2econfig/fish/functions/fish_prompt\x2efish\x1e\x7e/\x2econfig/fish/conf\x2ed/hydro\x2efish
-SETUVAR _fisher_plugins:reitzig/sdkman\x2dfor\x2dfish\x1ejorgebucaran/hydro\x1eaohorodnyk/fish\x2dautovenv
+SETUVAR _fisher_plugins:reitzig/sdkman\x2dfor\x2dfish\x1ejorgebucaran/hydro\x1eaohorodnyk/fish\x2dautovenv\x1eedc/bass
 SETUVAR _fisher_reitzig_2F_sdkman_2D_for_2D_fish_files:\x7e/\x2econfig/fish/functions/sdk\x2efish\x1e\x7e/\x2econfig/fish/conf\x2ed/sdk\x2efish\x1e\x7e/\x2econfig/fish/completions/sdk\x2efish
 SETUVAR _fisher_upgraded_to_4_4:\x1d
 SETUVAR autovenv_announce:no
