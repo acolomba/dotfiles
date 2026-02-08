@@ -19,7 +19,7 @@ macos-titlebar-style = native
 desktop-notifications = true
 
 # shell
-shell-integration-features = no-cursor,ssh-env
+shell-integration-features = no-cursor,ssh-terminfo
 
 
 # theme
