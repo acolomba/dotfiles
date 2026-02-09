@@ -1,3 +1,5 @@
 conf/
+Aptfile
 Brewfile
+Dnffile
 README.md

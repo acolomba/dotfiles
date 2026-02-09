@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Brewfile hash: {{ include "Brewfile" | sha256sum }}
 # Dnffile hash: {{ include "Dnffile" | sha256sum }}
+# Aptfile hash: {{ include "Aptfile" | sha256sum }}
 
 case $(uname) in
     Darwin)
@@ -12,6 +13,9 @@ case $(uname) in
     Linux)
         if [[ -f /etc/fedora-release ]] && type dnf &>/dev/null; then
             sudo dnf install -y $(<~/.local/share/chezmoi/Dnffile)
+        elif [[ -f /etc/debian_version ]] && type apt-get &>/dev/null; then
+            sudo apt-get update
+            sudo apt-get install -y $(<~/.local/share/chezmoi/Aptfile)
         fi
         ;;
 esac
