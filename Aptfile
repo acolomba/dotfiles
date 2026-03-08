@@ -28,6 +28,7 @@ python3
 ripgrep
 sd
 tig
+tmux
 tree
 vim
 wget

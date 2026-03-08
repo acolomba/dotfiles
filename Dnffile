@@ -28,6 +28,7 @@ procps-ng
 python3
 ripgrep
 tig
+tmux
 tree
 uv
 vim-enhanced
