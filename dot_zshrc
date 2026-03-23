@@ -88,7 +88,7 @@ man() {
 }
 
 # screen and tmux
-alias scr="screen -d -RR"
+command -v screen &>/dev/null && alias scr="screen -d -RR"
 alias t="tmux new -A -D -s main"
 
 # prompt
