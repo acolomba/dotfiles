@@ -6,7 +6,7 @@ copy-on-select = false
 
 # font
 font-size = 12
-font-family = Fira Code
+font-family = FiraCode Nerd Font Mono
 font-style = Retina
 font-style-bold = SemiBold
 font-thicken = true
