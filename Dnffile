@@ -26,7 +26,9 @@ pandoc
 pipx
 procps-ng
 python3
+python3-pip
 ripgrep
+screen
 tig
 tmux
 tree

@@ -26,7 +26,11 @@ pipx
 procps
 python3
 ripgrep
+<<<<<<< Updated upstream
 sd
+=======
+screen
+>>>>>>> Stashed changes
 tig
 tmux
 tree
