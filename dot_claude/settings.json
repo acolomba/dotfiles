@@ -36,6 +36,17 @@
         "matcher": "AskUserQuestion"
       }
     ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "command": "$HOME/.claude/hooks/notify.sh",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      }
+    ],
     "Stop": [
       {
         "hooks": [
