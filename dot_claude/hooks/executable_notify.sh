@@ -66,15 +66,17 @@ case "$EVENT" in
     ;;
 esac
 
-# Send OSC 9 notification, with tmux DCS passthrough if needed
+# Send OSC 9 notification through Claude Code's supported hook output.
 send_osc9() {
   local msg="$1"
+  local seq
   if [ -n "${TMUX:-}" ]; then
     # DCS passthrough: \ePtmux;\e<sequence>\e\\
-    printf '\ePtmux;\e\e]9;%s\a\e\\' "$msg" > /dev/tty
+    seq=$(printf '\033Ptmux;\033\033]9;%s\007\033\\' "$msg")
   else
-    printf '\e]9;%s\a' "$msg" > /dev/tty
+    seq=$(printf '\033]9;%s\007' "$msg")
   fi
+  jq -nc --arg seq "$seq" '{terminalSequence: $seq}'
 }
 
 send_osc9 "$MSG"
