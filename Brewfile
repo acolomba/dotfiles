@@ -33,11 +33,8 @@ brew "pandoc"
 brew "pipx"
 brew "python3"
 brew "ripgrep"
-<<<<<<< Updated upstream
 brew "sd"
-=======
 brew "screen"
->>>>>>> Stashed changes
 brew "tig"
 brew "tmux"
 brew "tree"
