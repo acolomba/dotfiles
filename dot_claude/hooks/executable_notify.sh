@@ -14,6 +14,12 @@ SESSION_ID=$(echo "$INPUT" | jq -r '.session_id')
 LOCK_DIR="${TMPDIR:-/tmp}"
 LOCK_FILE="${LOCK_DIR}/claude-notify-${SESSION_ID}"
 
+# UserPromptSubmit: user is active again — clear stale "needs input" state
+if [ "$EVENT" = "UserPromptSubmit" ]; then
+  rm -f "$LOCK_FILE"
+  exit 0
+fi
+
 # For Stop events, skip if a question notification just fired
 if [ "$EVENT" = "Stop" ]; then
   STOP_HOOK_ACTIVE=$(echo "$INPUT" | jq -r '.stop_hook_active')
@@ -34,17 +40,36 @@ SHORT_SESSION=$(echo "$SESSION_ID" | cut -c1-8)
 
 PREFIX="${DIR_NAME}@${BRANCH} [${SHORT_SESSION}]"
 
+# Return a single-line, control-character-free preview capped to N chars.
+# This keeps arbitrary command/path text as data only; we never eval it.
+sanitize_preview() {
+  local max_len="$1"
+  head -n 1 | LC_ALL=C tr -d '\000-\010\013\014\016-\037\177' | cut -c 1-"$max_len"
+}
+
 # Build message based on event type
 case "$EVENT" in
   PreToolUse)
     TOOL=$(echo "$INPUT" | jq -r '.tool_name')
     if [ "$TOOL" = "AskUserQuestion" ]; then
-      QUESTION=$(echo "$INPUT" | jq -r '.tool_input.questions[0].question // "question"' | head -c 120)
+      QUESTION=$(echo "$INPUT" | jq -r '.tool_input.questions[0].question // "question"' | sanitize_preview 120)
       MSG="${PREFIX}: ${QUESTION}"
       # Set lock so the subsequent Stop hook doesn't overwrite this notification
       touch "$LOCK_FILE"
+    elif [ "$TOOL" = "Bash" ]; then
+      COMMAND_PREVIEW=$(echo "$INPUT" | jq -r '.tool_input.command // ""' | sanitize_preview 80)
+      if [ -n "$COMMAND_PREVIEW" ]; then
+        MSG="${PREFIX}: Bash: ${COMMAND_PREVIEW}"
+      else
+        MSG="${PREFIX}: Bash"
+      fi
     else
-      MSG="${PREFIX}: waiting for input (${TOOL})"
+      PATH_PREVIEW=$(echo "$INPUT" | jq -r '.tool_input.file_path // .tool_input.path // ""' | sanitize_preview 120)
+      if [ -n "$PATH_PREVIEW" ]; then
+        MSG="${PREFIX}: ${TOOL}: ${PATH_PREVIEW}"
+      else
+        MSG="${PREFIX}: waiting for input (${TOOL})"
+      fi
     fi
     ;;
   Notification)
