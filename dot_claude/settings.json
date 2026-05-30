@@ -17,6 +17,7 @@
   },
   "extraKnownMarketplaces": {
     "superpowers-extended-cc-marketplace": {
+      "autoUpdate": true,
       "source": {
         "repo": "pcvelz/superpowers",
         "source": "github"
