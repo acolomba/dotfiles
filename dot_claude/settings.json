@@ -1,16 +1,18 @@
 {
+  "agentPushNotifEnabled": true,
   "autoDreamEnabled": true,
   "autoUpdatesChannel": "stable",
-  "effortLevel": "high",
+  "effortLevel": "xhigh",
   "enabledPlugins": {
-    "clangd-lsp@claude-plugins-official": true,
     "claude-code-setup@claude-plugins-official": true,
     "claude-md-management@claude-plugins-official": true,
     "commit-commands@claude-plugins-official": true,
+    "context7@claude-plugins-official": true,
     "hookify@claude-plugins-official": true,
     "playground@claude-plugins-official": true,
     "pr-review-toolkit@claude-plugins-official": true,
-    "security-guidance@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": false,
     "superpowers@superpowers-marketplace": true
   },
   "hooks": {
@@ -62,10 +64,12 @@
   "permissions": {
     "defaultMode": "acceptEdits"
   },
+  "remoteControlAtStartup": true,
   "skipDangerousModePermissionPrompt": true,
   "statusLine": {
     "command": "npx -y ccstatusline@latest",
     "padding": 0,
     "type": "command"
-  }
+  },
+  "theme": "auto"
 }
