@@ -36,7 +36,7 @@
         "matcher": "AskUserQuestion"
       }
     ],
-    "UserPromptSubmit": [
+    "Stop": [
       {
         "hooks": [
           {
@@ -47,7 +47,7 @@
         "matcher": ""
       }
     ],
-    "Stop": [
+    "UserPromptSubmit": [
       {
         "hooks": [
           {

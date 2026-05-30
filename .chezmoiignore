@@ -1,5 +1,7 @@
-conf/
+.pre-commit-config.yaml
 Aptfile
 Brewfile
 Dnffile
 README.md
+conf/
+scripts/
