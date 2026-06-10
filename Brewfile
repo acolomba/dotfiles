@@ -1,5 +1,6 @@
 brew "bash"
 brew "bash-completion@2"
+brew "chezmoi"
 brew "cloc"
 brew "curl"
 brew "diff-so-fancy"
@@ -16,6 +17,7 @@ brew "fzf"
 brew "gh"
 brew "git"
 brew "git-delta"
+brew "git-lfs"
 brew "glow"
 brew "helm"
 brew "hyperfine"
@@ -29,8 +31,10 @@ brew "mas"
 brew "mosh"
 brew "nethack"
 brew "nmap"
+brew "node"
 brew "pandoc"
 brew "pipx"
+brew "pyenv"
 brew "python3"
 brew "ripgrep"
 brew "sd"
@@ -39,6 +43,7 @@ brew "tig"
 brew "tmux"
 brew "tree"
 brew "uv"
+brew "vhs"
 brew "vim"
 brew "watch"
 brew "watchexec"
@@ -51,6 +56,7 @@ brew "zsh-autosuggestions"
 brew "zsh-completions"
 brew "zsh-syntax-highlighting"
 cask "1password"
+cask "amiberry"
 cask "audio-hijack"
 cask "balenaetcher"
 cask "bettertouchtool"
@@ -61,6 +67,8 @@ cask "chatgpt"
 cask "claude-code"
 cask "claude"
 cask "cleanmymac"
+cask "codex"
+cask "codex-app"
 cask "crossover"
 cask "cyberduck"
 cask "discord"
@@ -79,8 +87,6 @@ cask "intellij-idea"
 cask "istat-menus"
 cask "keystore-explorer"
 cask "knockknock"
-cask "logitech-camera-settings"
-cask "logitech-g-hub"
 cask "lunar-client"
 cask "mediahuman-audio-converter"
 cask "mimestream"
@@ -91,6 +97,7 @@ cask "parallels"
 cask "pgadmin4"
 cask "plex"
 cask "pycharm"
+cask "raspberry-pi-imager"
 cask "raze"
 cask "retroarch"
 cask "ringcentral"
@@ -103,6 +110,7 @@ cask "viscosity"
 cask "visual-studio-code"
 cask "vlc"
 cask "yacreader"
+cask "zed"
 cask "zoom"
 mas "1Blocker", id: 1365531024
 mas "1Password for Safari", id: 1569813296
@@ -111,6 +119,7 @@ mas "Calca", id: 635758264
 mas "Cookie", id: 1473091386
 mas "DaisyDisk", id: 411643860
 mas "Dark Reader for Safari", id: 1438243180
+mas "HazeOver", id: 430798174
 mas "Hush", id: 1544743900
 mas "iMovie", id: 408981434
 mas "Ivory", id: 6444602274
@@ -129,7 +138,9 @@ mas "SiteSucker", id: 442168834
 mas "Slack", id: 803453959
 mas "SponsorBlock", id: 1573461917
 mas "StopTheMadness Pro", id: 6471380298
+mas "StopTheScript", id: 1588394487
 mas "Telegram", id: 747648890
 mas "The Unarchiver", id: 425424353
 mas "Windows App", id: 1295203466
 mas "WireGuard", id: 1451685025
+mas "Xcode", id: 497799835

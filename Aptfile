@@ -12,6 +12,7 @@ fzf
 gh
 git
 git-delta
+git-lfs
 glow
 hyperfine
 iperf3
@@ -21,16 +22,15 @@ lazygit
 mosh
 nethack-console
 nmap
+nodejs
+npm
 pandoc
 pipx
 procps
 python3
 ripgrep
-<<<<<<< Updated upstream
-sd
-=======
 screen
->>>>>>> Stashed changes
+sd
 tig
 tmux
 tree
