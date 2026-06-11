@@ -1,0 +1,23 @@
+---
+description: "Menu Bar"
+sudo: false
+current_host: false
+data:
+  com.apple.controlcenter:
+    # Sound → Show volume in menu bar
+    "NSStatusItem Visible Sound": true
+    # Bluetooth in menu bar
+    "NSStatusItem Visible Bluetooth": true
+    # Time Machine in menu bar
+    "NSStatusItem Visible TimeMachine": true
+  com.apple.menuextra.clock:
+    # Show date in menu bar (0 = When space allows, 1 = Always, 2 = Never)
+    ShowDate: 1
+    # Show day of week
+    ShowDayOfWeek: true
+    # Show AM/PM
+    ShowAMPM: true
+  .GlobalPreferences:
+    # Users & Groups → Fast user switching menu as Icon
+    # 0 = Full Name, 1 = Account Name, 2 = Icon
+    userMenuExtraStyle: 2

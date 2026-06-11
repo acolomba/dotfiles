@@ -1,0 +1,9 @@
+---
+description: "Spotlight"
+sudo: false
+current_host: false
+data:
+  com.apple.lookup.shared:
+    # Spotlight → Search Results → Siri Suggestions (disable)
+    # Disables Siri/Lookup suggestions surfaced by Spotlight & Look Up
+    LookupSuggestionsDisabled: true

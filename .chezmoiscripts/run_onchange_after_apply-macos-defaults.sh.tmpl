@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+{{ if eq .chezmoi.os "darwin" -}}
+{{ range glob (joinPath .chezmoi.sourceDir "conf/macos-defaults/*.yaml") -}}
+#   {{ . | base }}: {{ include . | sha256sum }}
+{{ end }}
+
+set -euo pipefail
+
+if ! command -v macos-defaults >/dev/null 2>&1; then
+    echo "macos-defaults not on PATH; skipping" >&2
+    exit 0
+fi
+
+yaml_dir="{{ .chezmoi.sourceDir }}/conf/macos-defaults"
+
+if [[ -f "${yaml_dir}/safari.yaml" ]] && ! defaults read com.apple.Safari >/dev/null 2>&1; then
+    echo "Safari plist is not readable — Full Disk Access is required." >&2
+    echo "Grant Full Disk Access to your current terminal app, then quit, relaunch it, and re-run chezmoi apply." >&2
+    open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
+    exit 1
+fi
+
+shopt -s nullglob
+failures=()
+tmp_dir="$(mktemp -d -t macos-defaults.XXXXXX)"
+trap 'rm -rf "${tmp_dir}"' EXIT
+
+for yaml in "${yaml_dir}"/*.yaml; do
+    name="$(basename "${yaml}")"
+    rendered="${tmp_dir}/${name}"
+    chezmoi execute-template < "${yaml}" > "${rendered}"
+    if ! macos-defaults apply "${rendered}"; then
+        echo "Failed: ${name}" >&2
+        failures+=("${name}")
+    fi
+done
+
+if (( ${#failures[@]} > 0 )); then
+    echo "Some YAMLs failed to apply: ${failures[*]}" >&2
+fi
+
+for proc in Dock Finder SystemUIServer ControlCenter cfprefsd; do
+    killall "${proc}" >/dev/null 2>&1 || true
+done
+{{- else -}}
+exit 0
+{{- end }}

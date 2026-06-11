@@ -1,0 +1,18 @@
+---
+description: "Finder"
+sudo: false
+current_host: false
+data:
+  com.apple.finder:
+    # General → New Finder windows show: Home
+    NewWindowTarget: "PfHm"
+    NewWindowTargetPath: "file://{{ .chezmoi.homeDir }}/"
+    # Advanced → When performing a search: Search the Current Folder
+    FXDefaultSearchScope: "SCcf"
+    # View → Show Path Bar / Show Status Bar
+    ShowPathbar: true
+    ShowStatusBar: true
+    # Sort by Name (Note: GUI "Use as Defaults" writes deep FK_StandardViewSettings
+    # structures per-view — the toggle below sets the default arrange/sort behavior.)
+    FXPreferredGroupBy: "Name"
+    _FXSortFoldersFirst: true

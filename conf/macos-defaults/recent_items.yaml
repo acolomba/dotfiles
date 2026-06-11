@@ -1,0 +1,18 @@
+---
+description: "Recent Items"
+sudo: false
+current_host: false
+data:
+  com.apple.recentitems:
+    # General → Recent Items → None (Applications)
+    Applications:
+      MaxAmount: 0
+    # General → Recent Items → None (Documents)
+    Documents:
+      MaxAmount: 0
+    # General → Recent Items → None (Servers)
+    Hosts:
+      MaxAmount: 0
+  NSGlobalDomain:
+    # Limit recent files in Open/Save panels too
+    NSNavRecentPlacesLimit: 0

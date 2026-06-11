@@ -51,6 +51,7 @@ brew "watch"
 brew "watchexec"
 brew "wget"
 brew "xz"
+brew "yq"
 brew "yt-dlp"
 brew "zip"
 brew "zoxide"
@@ -118,7 +119,7 @@ mas "1Blocker", id: 1365531024
 mas "1Password for Safari", id: 1569813296
 mas "Amphetamine", id: 937984704
 mas "Calca", id: 635758264
-mas "Cookie", id: 1473091386
+mas "Cookie", id: 6452017315
 mas "DaisyDisk", id: 411643860
 mas "Dark Reader for Safari", id: 1438243180
 mas "HazeOver", id: 430798174

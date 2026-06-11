@@ -1,0 +1,23 @@
+---
+description: "Safari"
+sudo: false
+current_host: false
+data:
+  com.apple.Safari:
+    # General → New windows open with: Empty Page (1)
+    NewWindowBehavior: 1
+    # General → New tabs open with: Empty Page (1)
+    NewTabBehavior: 1
+    # General → Homepage (blank)
+    HomePage: ""
+    # AutoFill → disable all
+    AutoFillFromAddressBook: false
+    AutoFillPasswords: false
+    AutoFillCreditCardData: false
+    AutoFillMiscellaneousForms: false
+    # Search → Search Engine → DuckDuckGo
+    SearchProviderShortName: "DuckDuckGo"
+    # Search → Smart Search Field → Preload Top Hit in the background (deselect)
+    PreloadTopHit: false
+    # View → Show Favorites Bar
+    ShowFavoritesBar: true

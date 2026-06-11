@@ -1,0 +1,8 @@
+---
+description: "Mouse"
+sudo: false
+current_host: false
+data:
+  NSGlobalDomain:
+    # Mouse → Natural scrolling and Trackpad → Scroll & Zoom -> Natural scrolling
+    com.apple.swipescrolldirection: false

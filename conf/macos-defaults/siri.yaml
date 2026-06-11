@@ -1,0 +1,8 @@
+---
+description: "Siri"
+sudo: false
+current_host: false
+data:
+  com.apple.assistant.support:
+    # Siri → Enable Ask Siri (deselect)
+    "Assistant Enabled": false

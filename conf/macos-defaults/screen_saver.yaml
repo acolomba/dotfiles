@@ -1,0 +1,8 @@
+---
+description: "Screen Saver"
+sudo: false
+current_host: true
+data:
+  com.apple.screensaver:
+    # Screen Saver → Start after → Never (0 = never)
+    idleTime: 0

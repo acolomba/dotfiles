@@ -1,0 +1,23 @@
+---
+description: "Desktop & Dock"
+sudo: false
+current_host: false
+data:
+  com.apple.dock:
+    # Dock → Animate opening applications (deselect)
+    launchanim: false
+    # Dock → Show recent applications in Dock (deselect)
+    show-recents: false
+    # Mission Control → Automatically rearrange Spaces based on most recent use (deselect)
+    mru-spaces: false
+    # Hot Corners → Bottom Left → Desktop (corner action 4 = Desktop)
+    wvous-bl-corner: 4
+    wvous-bl-modifier: 0
+    # Dock size locked at 48
+    tilesize: 48
+    size-immutable: true
+
+  com.apple.spaces:
+    # Displays have separate Spaces (deselect)
+    # true → displays span (NOT separate); false → each display has its own Spaces
+    spans-displays: true

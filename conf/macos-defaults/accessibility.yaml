@@ -1,0 +1,14 @@
+---
+description: "Accessibility"
+sudo: false
+current_host: false
+data:
+  com.apple.universalaccess:
+    # Display → Reduce transparency
+    reduceTransparency: true
+    # Display → Increase contrast
+    increaseContrast: true
+
+  NSGlobalDomain:
+    # Accessibility → Shake mouse pointer to locate (deselect)
+    CGDisableCursorLocationMagnification: true

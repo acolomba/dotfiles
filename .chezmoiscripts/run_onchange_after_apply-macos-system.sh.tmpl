@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+{{ if eq .chezmoi.os "darwin" -}}
+set -uo pipefail
+
+failures=()
+step() {
+    local name="$1"; shift
+    echo "▶ ${name}"
+    if ! "$@"; then
+        echo "  ✗ Failed: ${name}" >&2
+        failures+=("${name}")
+    fi
+}
+
+# Spotlight exclusions — drop a .metadata_never_index marker in each path.
+# Works per-directory and regardless of volume-level indexing state; no sudo.
+disable_spotlight_indexing() {
+    local path rc=0
+    for path in "${HOME}/Applications (Parallels)" "/opt/homebrew/Caskroom"; do
+        [[ -d "${path}" ]] || continue
+        [[ -e "${path}/.metadata_never_index" ]] && continue
+        touch "${path}/.metadata_never_index" || rc=1
+    done
+    return "${rc}"
+}
+step "Spotlight exclusions" disable_spotlight_indexing
+
+# Energy Saver — prevent system sleep on AC when display is off.
+prevent_ac_sleep() {
+    sudo pmset -c sleep 0
+}
+step "Prevent sleep on AC" prevent_ac_sleep
+
+# Caps Lock → Control, scoped to Apple keyboards (VendorID 0x05ac).
+# hidutil mappings are session-only; reapplied on next chezmoi apply
+# after reboot. For boot-time persistence, install a LaunchAgent.
+#   src 0x700000039 = Caps Lock
+#   dst 0x7000000E0 = Left Control
+remap_caps_lock_apple() {
+    hidutil property \
+        --matching '{"VendorID":0x05ac}' \
+        --set '{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000039,"HIDKeyboardModifierMappingDst":0x7000000E0}]}' \
+        >/dev/null
+}
+step "Caps Lock → Control (Apple keyboards)" remap_caps_lock_apple
+
+if (( ${#failures[@]} > 0 )); then
+    echo
+    echo "Some steps failed: ${failures[*]}" >&2
+    exit 1
+fi
+{{- else -}}
+exit 0
+{{- end }}

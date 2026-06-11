@@ -1,0 +1,18 @@
+---
+description: "Global"
+sudo: false
+current_host: false
+data:
+  NSGlobalDomain:
+    # Save panels expanded by default; save to disk (not iCloud)
+    NSNavPanelExpandedStateForSaveMode: true
+    NSNavPanelExpandedStateForSaveMode2: true
+    NSDocumentSaveNewDocumentsToCloud: false
+
+    # Pre-Big Sur titlebars
+    NSWindowSupportsAutomaticInlineTitle: false
+  com.apple.desktopservices:
+    # Don't write .DS_Store on network volumes
+    DSDontWriteNetworkStores: true
+    # Don't write .DS_Store on USB volumes
+    DSDontWriteUSBStores: true
