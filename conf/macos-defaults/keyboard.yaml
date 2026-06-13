@@ -3,33 +3,6 @@ description: "Keyboard"
 sudo: false
 current_host: false
 data:
-  com.apple.symbolichotkeys:
-    AppleSymbolicHotKeys:
-      # 32 = Mission Control
-      "32":
-        enabled: false
-      # 33 = Show Application Windows
-      "33":
-        enabled: false
-      # 34 = (paired) Mission Control alt
-      "34":
-        enabled: false
-      # 35 = (paired) Application Windows alt
-      "35":
-        enabled: false
-      # 36 = Show Desktop
-      "36":
-        enabled: false
-      # 37 = (paired) Show Desktop alt
-      "37":
-        enabled: false
-      # 62 = Show Dashboard
-      "62":
-        enabled: false
-      # 52 = Launchpad & Dock → Turn Dock Hiding On/Off
-      "52":
-        enabled: false
-
   NSGlobalDomain:
     # Keyboard → Text
     NSAutomaticSpellingCorrectionEnabled: false

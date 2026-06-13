@@ -1,0 +1,8 @@
+---
+description: "Appearance"
+sudo: false
+current_host: false
+data:
+  NSGlobalDomain:
+    # Appearance → Liquid Glass slider (0.0 = clearest, 1.0 = most tinted/frosted)
+    NSGlassTintAmount: 1

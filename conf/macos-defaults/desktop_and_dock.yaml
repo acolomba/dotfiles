@@ -21,3 +21,9 @@ data:
     # Displays have separate Spaces (deselect)
     # true → displays span (NOT separate); false → each display has its own Spaces
     spans-displays: true
+
+  com.apple.symbolichotkeys:
+    AppleSymbolicHotKeys:
+      # 52 = Launchpad & Dock → Turn Dock Hiding On/Off (⌥⌘D)
+      "52":
+        enabled: false

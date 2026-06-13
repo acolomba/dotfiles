@@ -1,0 +1,73 @@
+---
+description: "Mission Control"
+sudo: false
+current_host: false
+data:
+  com.apple.symbolichotkeys:
+    AppleSymbolicHotKeys:
+      # 32 = Mission Control
+      "32":
+        enabled: false
+      # 33 = Show Application Windows
+      "33":
+        enabled: false
+      # 34 = (paired) Mission Control alt
+      "34":
+        enabled: false
+      # 35 = (paired) Application Windows alt
+      "35":
+        enabled: false
+      # 36 = Show Desktop
+      "36":
+        enabled: false
+      # 37 = (paired) Show Desktop alt
+      "37":
+        enabled: false
+      # 38 = Mission Control → Mouse Shortcut → Mouse Button 4
+      # parameters: [button mask, button mask, modifier flags]
+      # 8 = 1<<3 (mouse button 4); modifier 0 = none, 131072 = shift
+      "38":
+        enabled: true
+        value:
+          type: button
+          parameters:
+            - 8
+            - 8
+            - 0
+      # 40 = (paired) Mission Control alt mouse shortcut (shift)
+      "40":
+        enabled: true
+        value:
+          type: button
+          parameters:
+            - 8
+            - 8
+            - 131072
+      # 79 = Move left a space → Shift+Ctrl+Left
+      # parameters: [unused (0xFFFF), keycode, modifier flags]
+      # keycode 123 = Left arrow; modifier 8781824 = Fn|Ctrl|Shift
+      # (Fn is auto-added by macOS for arrow keys)
+      "79":
+        enabled: true
+        value:
+          type: standard
+          parameters:
+            - 65535
+            - 123
+            - 8781824
+      # 80 = (paired) Move left a space alt — disabled
+      "80":
+        enabled: false
+      # 81 = Move right a space → Shift+Ctrl+Right
+      # keycode 124 = Right arrow
+      "81":
+        enabled: true
+        value:
+          type: standard
+          parameters:
+            - 65535
+            - 124
+            - 8781824
+      # 82 = (paired) Move right a space alt — disabled
+      "82":
+        enabled: false

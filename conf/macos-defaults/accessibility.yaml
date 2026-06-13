@@ -6,8 +6,6 @@ data:
   com.apple.universalaccess:
     # Display → Reduce transparency
     reduceTransparency: true
-    # Display → Increase contrast
-    increaseContrast: true
 
   NSGlobalDomain:
     # Accessibility → Shake mouse pointer to locate (deselect)
