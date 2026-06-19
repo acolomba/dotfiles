@@ -5,3 +5,6 @@ Dnffile
 README.md
 conf/
 scripts/
+{{ if ne .chezmoi.os "darwin" }}
+.hammerspoon/
+{{ end }}
