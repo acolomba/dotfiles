@@ -4,6 +4,7 @@
   "autoUpdatesChannel": "stable",
   "effortLevel": "xhigh",
   "enabledPlugins": {
+    "claude-code-notify@acolomba-claude-plugins": true,
     "claude-code-setup@claude-plugins-official": true,
     "claude-md-management@claude-plugins-official": true,
     "commit-commands@claude-plugins-official": true,
@@ -23,52 +24,6 @@
         "source": "github"
       }
     }
-  },
-  "hooks": {
-    "Notification": [
-      {
-        "hooks": [
-          {
-            "command": "$HOME/.claude/hooks/notify.sh",
-            "type": "command"
-          }
-        ],
-        "matcher": ""
-      }
-    ],
-    "PreToolUse": [
-      {
-        "hooks": [
-          {
-            "command": "$HOME/.claude/hooks/notify.sh",
-            "type": "command"
-          }
-        ],
-        "matcher": "AskUserQuestion"
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "command": "$HOME/.claude/hooks/notify.sh",
-            "type": "command"
-          }
-        ],
-        "matcher": ""
-      }
-    ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "command": "$HOME/.claude/hooks/notify.sh",
-            "type": "command"
-          }
-        ],
-        "matcher": ""
-      }
-    ]
   },
   "permissions": {
     "defaultMode": "acceptEdits"
