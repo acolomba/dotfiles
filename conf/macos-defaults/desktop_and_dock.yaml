@@ -17,6 +17,12 @@ data:
     tilesize: 48
     size-immutable: true
 
+  com.apple.WindowManager:
+    # Windows → Drag windows to left or right edge of screen to tile (deselect)
+    EnableTilingByEdgeDrag: false
+    # Windows → Drag windows to menu bar to fill screen (deselect)
+    EnableTopTilingByEdgeDrag: false
+
   com.apple.spaces:
     # Displays have separate Spaces (deselect)
     # true → displays span (NOT separate); false → each display has its own Spaces
