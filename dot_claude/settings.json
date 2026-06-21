@@ -26,7 +26,7 @@
     }
   },
   "permissions": {
-    "defaultMode": "acceptEdits"
+    "defaultMode": "auto"
   },
   "remoteControlAtStartup": true,
   "skipDangerousModePermissionPrompt": true,
