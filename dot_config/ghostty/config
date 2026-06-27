@@ -21,7 +21,6 @@ desktop-notifications = true
 # shell
 shell-integration-features = no-cursor,ssh-terminfo
 
-
 # theme
 theme = "light:Monokai Pro Light Sun,dark:0x96f"
 
