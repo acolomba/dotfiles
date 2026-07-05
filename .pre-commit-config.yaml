@@ -8,10 +8,9 @@ repos:
       - id: check-merge-conflict
       - id: check-added-large-files
       - id: check-yaml
-  - repo: local
+  - repo: https://github.com/biomejs/pre-commit
+    rev: v2.5.2
     hooks:
-      - id: sort-json-files
-        name: sort JSON files
-        entry: scripts/sort-json-file.sh
-        language: system
+      - id: biome-check
+        additional_dependencies: ["@biomejs/biome@2.5.2"]
         files: \.json$

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.2/schema.json",
+  "assist": {
+    "actions": {
+      "source": {
+        "useSortedKeys": "on"
+      }
+    }
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2
+  },
+  "overrides": [
+    {
+      "includes": ["dot_config/zed/private_settings.json"],
+      "json": {
+        "formatter": { "trailingCommas": "all" },
+        "parser": { "allowTrailingCommas": true }
+      }
+    }
+  ]
+}
