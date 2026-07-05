@@ -1,0 +1,34 @@
+{
+  "buffer_font_family": "FiraCode Nerd Font Mono",
+  "buffer_font_size": 12.0,
+  "buffer_font_weight": 450,
+  "document_symbols": "on",
+  "drag_and_drop_selection": {
+    "enabled": false,
+  },
+  "languages": {
+    "Python": {
+      "wrap_guides": [88],
+    },
+  },
+  "project_panel": {
+    "dock": "left",
+  },
+  "scroll_beyond_last_line": "vertical_scroll_margin",
+  "soft_wrap": "editor_width",
+  "ssh_connections": [
+    {
+      "host": "olaf",
+      "projects": [
+        {
+          "paths": ["/mnt/misos/acolomba/peanuts"],
+        },
+      ],
+    },
+  ],
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
+  },
+  "wrap_guides": [120],
+}
