@@ -35,5 +35,6 @@
     "padding": 0,
     "type": "command"
   },
-  "theme": "auto"
+  "theme": "auto",
+  "tui": "fullscreen"
 }
