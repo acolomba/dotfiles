@@ -4,27 +4,26 @@
   "autoUpdatesChannel": "stable",
   "effortLevel": "xhigh",
   "enabledPlugins": {
-    "claude-code-notify@acolomba-claude-plugins": true,
-    "claude-code-setup@claude-plugins-official": true,
-    "claude-md-management@claude-plugins-official": true,
-    "commit-commands@claude-plugins-official": true,
-    "context7@claude-plugins-official": true,
-    "hookify@claude-plugins-official": true,
-    "playground@claude-plugins-official": true,
-    "pr-review-toolkit@claude-plugins-official": true,
-    "ralph-loop@claude-plugins-official": true,
-    "security-guidance@claude-plugins-official": false,
-    "superpowers-extended-cc@superpowers-extended-cc-marketplace": true
+    "andrej-karpathy-skills@karpathy-skills": true,
+    "claude-mem@thedotmack": true
   },
   "extraKnownMarketplaces": {
-    "superpowers-extended-cc-marketplace": {
+    "karpathy-skills": {
       "autoUpdate": true,
       "source": {
-        "repo": "pcvelz/superpowers",
+        "repo": "forrestchang/andrej-karpathy-skills",
+        "source": "github"
+      }
+    },
+    "thedotmack": {
+      "autoUpdate": true,
+      "source": {
+        "repo": "thedotmack/claude-mem",
         "source": "github"
       }
     }
   },
+  "model": "claude-fable-5[1m]",
   "permissions": {
     "defaultMode": "auto"
   },
