@@ -4,7 +4,14 @@ set -euo pipefail
 command -v biome >/dev/null 2>&1 || exit 0
 command -v chezmoi >/dev/null 2>&1 || exit 0
 
-source_dir="$(chezmoi source-path)"
+# when run by `chezmoi apply`, the parent chezmoi holds the persistent state
+# lock, so nested `chezmoi source-path` calls must point at a throwaway state
+# (the path must not exist yet; bolt can't open a pre-existing empty file)
+state_dir="$(mktemp -d)"
+trap 'rm -rf "$state_dir"' EXIT
+czm() { chezmoi --persistent-state "$state_dir/state.boltdb" "$@"; }
+
+source_dir="${CHEZMOI_SOURCE_DIR:-$(czm source-path)}"
 
 # format + sort keys; tolerates JSONC (comments, trailing commas) in .json files.
 # flags mirror the repo's biome.json so sources and targets converge on the same
@@ -45,7 +52,7 @@ chezmoi managed | while IFS= read -r target; do
   [ -f "$file" ] && biome_fmt "$file" $extra
 
   # format the source too; run from the repo so its biome.json is the config root
-  src="$(chezmoi source-path "$file" 2>/dev/null || true)"
+  src="$(czm source-path "$file" 2>/dev/null || true)"
   case "$src" in
     *.json) [ -f "$src" ] && (cd "$source_dir" && biome_fmt "$src" $extra) ;;
   esac
