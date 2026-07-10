@@ -8,7 +8,6 @@ diffoscope
 direnv
 du-dust
 fd-find
-fish
 frotz
 fzf
 gh
@@ -34,7 +33,6 @@ python3-pip
 ripgrep
 screen
 tig
-tmux
 tree
 uv
 vhs
@@ -43,7 +41,6 @@ wget2-wget
 yq
 yt-dlp
 zip
-zoxide
 zsh
 zsh-autosuggestions
 zsh-syntax-highlighting

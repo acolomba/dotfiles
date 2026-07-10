@@ -1,18 +1,22 @@
 #!/usr/bin/env bash
-# Brewfile hash: {{ include "Brewfile" | sha256sum }}
+# Brewfile.macos hash: {{ include "Brewfile.macos" | sha256sum }}
+# Brewfile.fedora hash: {{ include "Brewfile.fedora" | sha256sum }}
 # Dnffile hash: {{ include "Dnffile" | sha256sum }}
 # Aptfile hash: {{ include "Aptfile" | sha256sum }}
 
 case $(uname) in
     Darwin)
         if type brew &>/dev/null; then
-            brew bundle --file ~/.local/share/chezmoi/Brewfile
+            brew bundle --file ~/.local/share/chezmoi/Brewfile.macos
         fi
         ;;
 
     Linux)
         if [[ -f /etc/fedora-release ]] && type dnf &>/dev/null; then
             sudo dnf install -y $(<~/.local/share/chezmoi/Dnffile)
+            if type brew &>/dev/null; then
+                brew bundle --file ~/.local/share/chezmoi/Brewfile.fedora
+            fi
         elif [[ -f /etc/debian_version ]] && type apt-get &>/dev/null; then
             sudo apt-get update
             sudo apt-get install -y $(<~/.local/share/chezmoi/Aptfile)

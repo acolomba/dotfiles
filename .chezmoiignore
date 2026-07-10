@@ -1,6 +1,7 @@
 .pre-commit-config.yaml
 Aptfile
-Brewfile
+Brewfile.macos
+Brewfile.fedora
 Dnffile
 README.md
 biome.json

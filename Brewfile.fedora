@@ -1,0 +1,4 @@
+brew "biome"
+brew "fish"
+brew "tmux"
+brew "zoxide"
