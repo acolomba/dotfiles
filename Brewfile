@@ -1,6 +1,7 @@
 tap "dsully/tap", trusted: true
 brew "bash"
 brew "bash-completion@2"
+brew "biome"
 brew "chezmoi"
 brew "cloc"
 brew "curl"

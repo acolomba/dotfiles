@@ -3,6 +3,7 @@ Aptfile
 Brewfile
 Dnffile
 README.md
+biome.json
 conf/
 scripts/
 {{ if ne .chezmoi.os "darwin" }}
