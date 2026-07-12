@@ -4,17 +4,9 @@
   "autoUpdatesChannel": "stable",
   "effortLevel": "xhigh",
   "enabledPlugins": {
-    "andrej-karpathy-skills@karpathy-skills": true,
     "claude-mem@thedotmack": true
   },
   "extraKnownMarketplaces": {
-    "karpathy-skills": {
-      "autoUpdate": true,
-      "source": {
-        "repo": "forrestchang/andrej-karpathy-skills",
-        "source": "github"
-      }
-    },
     "thedotmack": {
       "autoUpdate": true,
       "source": {
