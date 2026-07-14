@@ -14,6 +14,9 @@ font-thicken-strength = 100
 adjust-cell-width = -10%
 adjust-cell-height = 0%
 
+# keybinds
+keybind = cmd+shift+zero=reset_window_size
+
 # macos
 macos-titlebar-style = native
 desktop-notifications = true
