@@ -1,0 +1,8 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env bash
+# Brewfile.macos hash: {{ include "Brewfile.macos" | sha256sum }}
+
+if type brew &>/dev/null; then
+    brew bundle --file ~/.local/share/chezmoi/Brewfile.macos
+fi
+{{- end }}

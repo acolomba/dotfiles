@@ -1,0 +1,7 @@
+{{ if and (eq .chezmoi.os "linux") (eq (dig "id" "" .chezmoi.osRelease) "debian") (not (contains "truenas" (dig "osrelease" "" .chezmoi.kernel))) -}}
+#!/usr/bin/env bash
+# Aptfile hash: {{ include "Aptfile" | sha256sum }}
+
+sudo apt-get update
+sudo apt-get install -y $(<~/.local/share/chezmoi/Aptfile)
+{{- end }}

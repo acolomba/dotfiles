@@ -1,0 +1,10 @@
+{{ if and (eq .chezmoi.os "linux") (eq (dig "id" "" .chezmoi.osRelease) "fedora") -}}
+#!/usr/bin/env bash
+# Dnffile hash: {{ include "Dnffile" | sha256sum }}
+# Brewfile.fedora hash: {{ include "Brewfile.fedora" | sha256sum }}
+
+sudo dnf install -y $(<~/.local/share/chezmoi/Dnffile)
+if type brew &>/dev/null; then
+    brew bundle --file ~/.local/share/chezmoi/Brewfile.fedora
+fi
+{{- end }}
