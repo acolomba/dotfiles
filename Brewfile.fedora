@@ -1,5 +1,6 @@
 brew "biome"
 brew "bun"
 brew "fish"
+brew "herdr"
 brew "tmux"
 brew "zoxide"
