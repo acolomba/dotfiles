@@ -15,12 +15,15 @@
       }
     }
   },
-  "model": "claude-fable-5[1m]",
+  "model": "opus[1m]",
+  "outputStyle": "Concise",
   "permissions": {
     "defaultMode": "auto"
   },
+  "promptSuggestionEnabled": false,
   "remoteControlAtStartup": true,
   "skipDangerousModePermissionPrompt": true,
+  "spinnerTipsEnabled": false,
   "statusLine": {
     "command": "npx -y ccstatusline@latest",
     "padding": 0,
