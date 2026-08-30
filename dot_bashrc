@@ -1,5 +1,33 @@
-# do nothing if non-interactive
+# shellcheck source=/dev/null
+# global definitions
+if [[ -r /etc/bashrc ]] && ! shopt -q login_shell; then
+    . /etc/bashrc
+fi
+
+# own bins
+for dir in "$HOME/bin" "$HOME/.local/bin"; do
+    PATH=":$PATH:"
+    PATH="${PATH//:$dir:/:}"
+    PATH="${PATH#:}"; PATH="${PATH%:}"
+    PATH="$dir:$PATH"
+done
+unset dir
+export PATH
+
+# do nothing further if non-interactive
 [[ $- != *i* ]] && return
+
+# history prefs
+export HISTSIZE=50000
+export HISTCONTROL="erasedups:ignoredups:ignorespace"
+export HISTIGNORE="bg:fg:rm *:exit"
+
+# editor
+if command -v vim &>/dev/null; then
+    export EDITOR=vim
+else
+    export EDITOR=vi
+fi
 
 # appends to the histfile instead of overwriting
 shopt -s histappend
@@ -110,7 +138,7 @@ fi
 command -v zoxide &>/dev/null && eval "$(zoxide init --cmd j bash)"
 
 # completion; this runs only on 4+
-if (( $BASH_VERSINFO >= 4 )); then
+if (( BASH_VERSINFO[0] >= 4 )) && [[ -z ${BASH_COMPLETION_VERSINFO-} ]]; then
     case $(uname) in
         Darwin)
             [[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]] && . "$(brew --prefix)/etc/profile.d/bash_completion.sh"

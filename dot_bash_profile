@@ -1,25 +1,5 @@
-# own bins
-export PATH="${HOME}/bin:${PATH}"
-
-# history prefs
-export HISTSIZE=50000
-export HISTCONTROL="erasedups:ignoredups:ignorespace"
-export HISTIGNORE="bg:fg:rm *:exit"
-
-# editor
-if command -v vim &>/dev/null; then
-    export EDITOR=vim
-else
-    export EDITOR=vi
-fi
-
-# less
-export LESS="-FRXi"
+# shellcheck source=/dev/null
+[[ -f ~/.bashrc ]] && . ~/.bashrc
 
 # shellcheck source=/dev/null
-# sources local profile
 [[ -r ~/.bash_profile-local ]] && . ~/.bash_profile-local
-
-# shellcheck source=/dev/null
-# sources bashrc for interactive login shells
-[[ $- == *i* ]] && [[ -f ~/.bashrc ]] && shopt login_shell >/dev/null && . ~/.bashrc
