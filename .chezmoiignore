@@ -1,6 +1,7 @@
 .pre-commit-config.yaml
 Aptfile
 Brewfile.macos
+Brewfile.bazzite
 Brewfile.fedora
 Dnffile
 README.md

@@ -1,0 +1,8 @@
+{{ if and (eq .chezmoi.os "linux") (eq (dig "id" "" .chezmoi.osRelease) "bazzite") -}}
+#!/usr/bin/env bash
+# Brewfile.bazzite hash: {{ include "Brewfile.bazzite" | sha256sum }}
+
+if type brew &>/dev/null; then
+    brew bundle --file ~/.local/share/chezmoi/Brewfile.bazzite
+fi
+{{- end }}
