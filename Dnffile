@@ -7,6 +7,7 @@ diff-so-fancy
 diffoscope
 direnv
 du-dust
+eza
 fd-find
 frotz
 fzf
@@ -32,12 +33,12 @@ python3
 python3-pip
 ripgrep
 screen
-tig
 tree
 uv
 vhs
 vim-enhanced
 wget2-wget
+xz
 yq
 yt-dlp
 zip
