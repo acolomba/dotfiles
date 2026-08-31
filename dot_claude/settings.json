@@ -3,18 +3,6 @@
   "autoDreamEnabled": true,
   "autoUpdatesChannel": "stable",
   "effortLevel": "xhigh",
-  "enabledPlugins": {
-    "claude-mem@thedotmack": true
-  },
-  "extraKnownMarketplaces": {
-    "thedotmack": {
-      "autoUpdate": true,
-      "source": {
-        "repo": "thedotmack/claude-mem",
-        "source": "github"
-      }
-    }
-  },
   "model": "opus[1m]",
   "outputStyle": "Concise",
   "permissions": {
