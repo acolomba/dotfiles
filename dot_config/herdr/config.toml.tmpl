@@ -1,0 +1,33 @@
+onboarding = false
+
+[keys]
+prefix = "ctrl+a"
+
+{{- /* prefers homebrew's fish, then any fish on PATH */ -}}
+{{- $fish := "" -}}
+{{- if lookPath "brew" -}}
+{{-   $brewPrefix := output "brew" "--prefix" | trim -}}
+{{-   if stat (printf "%s/bin/fish" $brewPrefix) -}}
+{{-     $fish = printf "%s/bin/fish" $brewPrefix -}}
+{{-   end -}}
+{{- end -}}
+{{- if eq $fish "" -}}
+{{-   $fish = lookPath "fish" -}}
+{{- end -}}
+{{- if $fish }}
+
+[terminal]
+default_shell = "{{ $fish }}"
+shell_mode = "auto"
+{{ else }}
+{{ end }}
+[theme]
+dark_name = "one-dark"
+light_name = "one-light"
+
+[ui]
+copy_on_select = false
+agent_panel_sort = "spaces"
+
+[ui.toast]
+delivery = "terminal"

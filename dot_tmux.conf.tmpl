@@ -8,6 +8,23 @@ bind C-a last-window
 bind Space next-window
 bind BSpace previous-window
 
+{{- /* prefers homebrew's fish, then any fish on PATH */ -}}
+{{- $fish := "" -}}
+{{- if lookPath "brew" -}}
+{{-   $brewPrefix := output "brew" "--prefix" | trim -}}
+{{-   if stat (printf "%s/bin/fish" $brewPrefix) -}}
+{{-     $fish = printf "%s/bin/fish" $brewPrefix -}}
+{{-   end -}}
+{{- end -}}
+{{- if eq $fish "" -}}
+{{-   $fish = lookPath "fish" -}}
+{{- end -}}
+{{- if $fish }}
+
+#shell
+set-option -g default-shell {{ $fish }}
+{{ else }}
+{{ end }}
 # escape sequence passthrough (e.g. notifications)
 set -g allow-passthrough on
 

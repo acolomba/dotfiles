@@ -1,18 +1,12 @@
 {{- /* prefers homebrew's fish, then any fish on PATH, then ghostty's default */ -}}
-{{- $brewPrefix := "" -}}
+{{- $fish := "" -}}
 {{- if lookPath "brew" -}}
-{{-   $brewPrefix = trimSuffix "/bin/brew" (lookPath "brew") -}}
-{{- else -}}
-{{-   range (list "/opt/homebrew" "/usr/local" "/home/linuxbrew/.linuxbrew") -}}
-{{-     if and (eq $brewPrefix "") (stat (printf "%s/bin/brew" .)) -}}
-{{-       $brewPrefix = . -}}
-{{-     end -}}
+{{-   $brewPrefix := output "brew" "--prefix" | trim -}}
+{{-   if stat (printf "%s/bin/fish" $brewPrefix) -}}
+{{-     $fish = printf "%s/bin/fish" $brewPrefix -}}
 {{-   end -}}
 {{- end -}}
-{{- $fish := "" -}}
-{{- if and (ne $brewPrefix "") (stat (printf "%s/bin/fish" $brewPrefix)) -}}
-{{-   $fish = printf "%s/bin/fish" $brewPrefix -}}
-{{- else -}}
+{{- if eq $fish "" -}}
 {{-   $fish = lookPath "fish" -}}
 {{- end -}}
 {{ if $fish }}command = {{ $fish }} --login --interactive
