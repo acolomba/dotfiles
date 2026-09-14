@@ -1,48 +1,43 @@
-{{- /* prefers homebrew's fish, then any fish on PATH, then ghostty's default */ -}}
-{{- $fish := "" -}}
+{{- /* prefers homebrew's fish, then any fish on PATH */ -}}
+{{- $fish := lookPath "fish" -}}
 {{- if lookPath "brew" -}}
 {{-   $brewPrefix := output "brew" "--prefix" | trim -}}
 {{-   if stat (printf "%s/bin/fish" $brewPrefix) -}}
 {{-     $fish = printf "%s/bin/fish" $brewPrefix -}}
 {{-   end -}}
 {{- end -}}
-{{- if eq $fish "" -}}
-{{-   $fish = lookPath "fish" -}}
-{{- end -}}
-{{ if $fish }}command = {{ $fish }} --login --interactive
-
-{{ end -}}
-# behavior
-auto-update = download
-copy-on-select = false
 
 # font
-font-size = 12
-font-family = FiraCode Nerd Font Mono
-font-style = Retina
+font-family = Monaspace Neon NF
+font-style = Medium
 font-style-bold = SemiBold
-font-thicken = true
-font-thicken-strength = 100
+font-size = 12
 adjust-cell-width = -10%
-adjust-cell-height = 0%
-
-# keybinds
-keybind = cmd+shift+zero=reset_window_size
-
-# macos
-macos-titlebar-style = native
-desktop-notifications = true
-
-# shell
-shell-integration-features = no-cursor,ssh-terminfo
 
 # theme
 theme = "light:Monokai Pro Light Sun,dark:0x96f"
 
+# shell
+{{- if $fish }}
+command = {{ $fish }} --login --interactive
+{{- end }}
+shell-integration-features = no-cursor,ssh-terminfo
+
 # window
-window-show-tab-bar = always
+working-directory = home
+window-inherit-working-directory = false
 window-theme = system
 window-height = 40
 window-width = 132
-window-inherit-working-directory = false
-working-directory = home
+window-show-tab-bar = always
+
+# keybinds
+keybind = cmd+shift+zero=reset_window_size
+
+# behavior
+copy-on-select = false
+auto-update = download
+
+# macos
+macos-titlebar-style = native
+desktop-notifications = true
