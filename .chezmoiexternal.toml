@@ -1,0 +1,4 @@
+[".zsh/plugins/zsh-autoswitch-virtualenv"]
+    type = "git-repo"
+    url = "https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv.git"
+    clone.args = ["--depth", "1"]

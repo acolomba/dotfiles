@@ -11,9 +11,7 @@ setopt HIST_REDUCE_BLANKS
 setopt HIST_IGNORE_SPACE
 setopt HIST_NO_STORE
 setopt CORRECT
-
-bindkey '^[[A' up-line-or-search
-bindkey '^[[B' down-line-or-search
+setopt INTERACTIVE_COMMENTS
 
 # editing
 bindkey -e
@@ -23,13 +21,18 @@ select-word-style bash
 # completion
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' menu select=2
+zstyle ':completion:*' verbose yes
 zstyle :compinstall filename "$HOME/.zshrc"
 
-# personal completion
-fpath=(~/.zsh/completion $fpath)
+if command -v brew &>/dev/null; then
+    fpath=($(brew --prefix)/share/zsh-completions $fpath)
+    fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
+    export HOMEBREW_NO_ASK=1
+fi
 
-# personal path
-path+=("$HOME/.local/bin" "$HOME/bin")
+# path
+typeset -U path
+path=(~/.local/bin "$HOME/bin" $path)
 export PATH
 
 autoload -Uz compinit && compinit
@@ -87,6 +90,9 @@ man() {
     man "$@"
 }
 
+# kubectl
+alias k=kubectl
+
 # screen and tmux
 command -v screen &>/dev/null && alias scr="screen -d -RR"
 alias t="tmux new -A -D -s main"
@@ -96,66 +102,35 @@ if [[ $TERM == "screen" ]]; then
     _GET_PATH='echo $PWD | sed "s/^\/Users\//~/;s/^~$USER/~/"'
     TAB_TITLE_PREFIX='"`'$_GET_PATH' | sed "s:..*/::"`$PROMPT_CHAR"'
 
-    function preexec()
-    {
+    preexec() {
         local -a cmd=(${(z)1})
-        print -nR $'\033k'$cmd[1]:t$'\033'\\\
+        print -nR $'\033k'${cmd[1]:t}$'\033\\'
     }
 
-    function precmd()
-    {
+    precmd() {
         eval "tab_title=\"$TAB_TITLE_PREFIX|$SHELL:t\""
-        print -nR $'\033k'$tab_title$'\033'\\\
+        print -nR $'\033k'$tab_title$'\033\\'
     }
 fi
-
-# colors
-autoload -U colors && colors
-PROMPT="%{$fg[red]%}%m%{$reset_color%}:%{$fg[blue]%}%~%{$reset_color%} %# "
-
-# vcs info
-autoload -Uz vcs_info
-precmd_vcs_info() { vcs_info }
-precmd_functions+=( precmd_vcs_info )
-setopt prompt_subst
-RPROMPT=\$vcs_info_msg_0_
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:*' get-revision true
-zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' formats '[%b]%u%c-'
-zstyle ':vcs_info:*' actionformats '[%b|%a]%u%c-'
 
 # direnv
 if command -v direnv &>/dev/null; then
-    eval "$(direnv hook zsh)"
     export DIRENV_LOG_FORMAT=
+    eval "$(direnv hook zsh)"
 fi
+
+# autoswitch virtualenv: activate the nearest .venv on directory changes
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+[[ -r ~/.zsh/plugins/zsh-autoswitch-virtualenv/autoswitch_virtualenv.plugin.zsh ]] &&
+    source ~/.zsh/plugins/zsh-autoswitch-virtualenv/autoswitch_virtualenv.plugin.zsh
 
 # fzf
 if command -v fzf &>/dev/null && [[ $- == *i* ]]; then
-    eval "$(fzf --zsh)"
+    source <(fzf --zsh)
 fi
 
 # zoxide
 command -v zoxide &>/dev/null && eval "$(zoxide init --cmd j zsh)"
-
-# completion
-
-# completion for homebrew software
-if command -v brew &>/dev/null; then
-    fpath=($(brew --prefix)/share/zsh-completions $fpath)
-    fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
-fi
-
-# sets completion for a command the same as another (https://unix.stackexchange.com/questions/496379/treat-command-like-another-for-completion-purposes)
-compdefas () {
-  if (($+_comps[$1])); then
-    compdef $_comps[$1] ${^@[2,-1]}=$1
-  fi
-}
-
-# autocompletes mvnd as if it were mvn
-command -v mvnd &>/dev/null && compdefas mvn mvnd
 
 # autosuggestions
 ZSH_AUTOSUGGEST_STRATEGY=(history)
@@ -166,10 +141,35 @@ elif [[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
 fi
 
 # zsh syntax highlighting
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 if command -v brew &>/dev/null && [[ -f $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
     . $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 elif [[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
     . /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
+# prompt
+autoload -U promptinit
+promptinit
+if (( ${prompt_themes[(Ie)pure]} )); then
+    prompt_newline=' '
+    prompt pure
+else
+    # Previous built-in zsh prompt: host:path on the left, Git on the right.
+    autoload -U colors && colors
+    PROMPT="%{$fg[red]%}%m%{$reset_color%}:%{$fg[blue]%}%~%{$reset_color%} %# "
+    autoload -Uz vcs_info
+    precmd_vcs_info() {
+        vcs_info
+    }
+    precmd_functions+=( precmd_vcs_info )
+    setopt prompt_subst
+    RPROMPT=\$vcs_info_msg_0_
+    zstyle ':vcs_info:*' enable git
+    zstyle ':vcs_info:*' get-revision true
+    zstyle ':vcs_info:*' check-for-changes true
+    zstyle ':vcs_info:*' formats '[%b]%u%c-'
+    zstyle ':vcs_info:*' actionformats '[%b|%a]%u%c-'
 fi
 
 # sources local zshrc

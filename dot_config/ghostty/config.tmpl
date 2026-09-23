@@ -1,9 +1,25 @@
-{{- /* prefers homebrew's fish, then any fish on PATH */ -}}
-{{- $fish := lookPath "fish" -}}
+{{- /* Homebrew zsh, system zsh, then Ghostty's default shell */ -}}
+{{- $shell := "" -}}
 {{- if lookPath "brew" -}}
 {{-   $brewPrefix := output "brew" "--prefix" | trim -}}
-{{-   if stat (printf "%s/bin/fish" $brewPrefix) -}}
-{{-     $fish = printf "%s/bin/fish" $brewPrefix -}}
+{{-   if stat (printf "%s/bin/zsh" $brewPrefix) -}}
+{{-     $shell = printf "%s/bin/zsh" $brewPrefix -}}
+{{-   end -}}
+{{- end -}}
+{{- if eq $shell "" -}}
+{{-   if stat "/opt/homebrew/bin/zsh" -}}
+{{-     $shell = "/opt/homebrew/bin/zsh" -}}
+{{-   else if stat "/usr/local/bin/zsh" -}}
+{{-     $shell = "/usr/local/bin/zsh" -}}
+{{-   else if stat "/home/linuxbrew/.linuxbrew/bin/zsh" -}}
+{{-     $shell = "/home/linuxbrew/.linuxbrew/bin/zsh" -}}
+{{-   end -}}
+{{- end -}}
+{{- if eq $shell "" -}}
+{{-   if stat "/bin/zsh" -}}
+{{-     $shell = "/bin/zsh" -}}
+{{-   else if stat "/usr/bin/zsh" -}}
+{{-     $shell = "/usr/bin/zsh" -}}
 {{-   end -}}
 {{- end -}}
 
@@ -18,8 +34,8 @@ adjust-cell-width = -10%
 theme = "light:Monokai Pro Light Sun,dark:0x96f"
 
 # shell
-{{- if $fish }}
-command = {{ $fish }} --login --interactive
+{{- if $shell }}
+command = {{ $shell }} --login --interactive
 {{- end }}
 shell-integration-features = no-cursor,ssh-terminfo
 
