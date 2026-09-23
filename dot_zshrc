@@ -29,7 +29,7 @@ zstyle :compinstall filename "$HOME/.zshrc"
 fpath=(~/.zsh/completion $fpath)
 
 # personal path
-path+=("$HOME/bin")
+path+=("$HOME/.local/bin" "$HOME/bin")
 export PATH
 
 autoload -Uz compinit && compinit

@@ -1,0 +1,183 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+    cat <<'EOF'
+Usage:
+  wt new [--basedir DIR] [--herdr] <name>
+  wt remove|rm [--remove-branch] <name>
+  wt list|ls
+
+Worktrees use the branch features/<name> and the directory
+<basedir>/<repo>-<name>. The default basedir is ~/src.
+
+`wt new` prints the new path. With --herdr, it opens a separate
+Herdr space instead.
+EOF
+}
+
+error() {
+    printf 'wt: %s\n' "$1" >&2
+    exit 2
+}
+
+require_repo() {
+    if ! current_root=$(git rev-parse --show-toplevel 2>/dev/null); then
+        printf 'wt: not inside a git repository\n' >&2
+        exit 1
+    fi
+}
+
+load_worktrees() {
+    primary_root=
+    matching_root=
+    worktree_paths=()
+    worktree_branches=()
+    local field path= branch=
+    while IFS= read -r -d '' field; do
+        case $field in
+            'worktree '*) path=${field#worktree } ;;
+            'branch '*) branch=${field#branch } ;;
+            '')
+                worktree_paths+=("$path")
+                worktree_branches+=("$branch")
+                if [[ -z $primary_root ]]; then
+                    primary_root=$path
+                fi
+                if [[ -n ${wanted_branch-} && $branch == "refs/heads/$wanted_branch" ]]; then
+                    matching_root=$path
+                fi
+                path=
+                branch=
+                ;;
+        esac
+    done < <(git -C "$current_root" worktree list --porcelain -z)
+    [[ -n $primary_root ]] || error 'could not find the primary worktree'
+}
+
+list_worktrees() {
+    local i branch name
+    require_repo
+    load_worktrees
+    printf '%-18s %-28s %s\n' NAME BRANCH DIRECTORY
+    for i in "${!worktree_paths[@]}"; do
+        branch=${worktree_branches[i]}
+        if [[ $branch == refs/heads/* ]]; then
+            branch=${branch#refs/heads/}
+        else
+            branch='(detached)'
+        fi
+        if [[ $branch == features/* ]]; then
+            name=${branch#features/}
+        else
+            name=-
+        fi
+        printf '%-18s %-28s %s\n' "$name" "$branch" "${worktree_paths[i]}"
+    done
+}
+
+check_name() {
+    [[ -n $name && $name != */* && $name != . && $name != .. ]] || error 'name must be one path component'
+    git check-ref-format --branch "features/$name" >/dev/null 2>&1 || error "invalid branch name: features/$name"
+}
+
+new_worktree() {
+    local basedir="$HOME/src" open_herdr=false name= target_path repo_name
+    local -a positional=()
+    while (( $# )); do
+        case $1 in
+            --basedir)
+                (( $# >= 2 )) && [[ -n $2 ]] || error '--basedir requires a directory'
+                basedir=$2
+                shift 2
+                ;;
+            --basedir=*) basedir=${1#--basedir=}; shift ;;
+            --herdr) open_herdr=true; shift ;;
+            -h|--help) usage; return 0 ;;
+            --) shift; positional+=("$@"); break ;;
+            -*) error "unknown option: $1" ;;
+            *) positional+=("$1"); shift ;;
+        esac
+    done
+    (( ${#positional[@]} == 1 )) || error 'new requires exactly one <name>'
+    name=${positional[0]}
+    check_name
+    [[ -n $basedir ]] || error '--basedir requires a directory'
+    case $basedir in
+        '~') basedir=$HOME ;;
+        '~/'*) basedir="$HOME/${basedir:2}" ;;
+    esac
+
+    require_repo
+    load_worktrees
+    repo_name=${primary_root##*/}
+    mkdir -p -- "$basedir"
+    basedir=$(cd -- "$basedir" && pwd -P)
+    target_path="$basedir/$repo_name-$name"
+
+    if git -C "$current_root" show-ref --verify --quiet "refs/heads/features/$name"; then
+        git -C "$current_root" worktree add -q "$target_path" "features/$name"
+    else
+        git -C "$current_root" worktree add -q -b "features/$name" "$target_path"
+    fi
+
+    if $open_herdr; then
+        if ! herdr workspace create --cwd "$target_path" --label "$repo_name-$name" --focus >/dev/null; then
+            printf 'wt: worktree created at %s, but the Herdr space could not be opened\n' "$target_path" >&2
+            return 1
+        fi
+        printf 'wt: opened a Herdr space at %s\n' "$target_path" >&2
+    else
+        printf '%s\n' "$target_path"
+    fi
+}
+
+remove_worktree() {
+    local remove_branch=false name= branch current_dir
+    local -a positional=()
+    while (( $# )); do
+        case $1 in
+            --remove-branch) remove_branch=true; shift ;;
+            -h|--help) usage; return 0 ;;
+            --) shift; positional+=("$@"); break ;;
+            -*) error "unknown option: $1" ;;
+            *) positional+=("$1"); shift ;;
+        esac
+    done
+    (( ${#positional[@]} == 1 )) || error 'remove requires exactly one <name>'
+    name=${positional[0]}
+    check_name
+    branch="features/$name"
+
+    require_repo
+    wanted_branch=$branch
+    load_worktrees
+    [[ -n $matching_root ]] || error "no worktree uses $branch"
+    [[ $matching_root != "$primary_root" ]] || error 'cannot remove the primary worktree'
+
+    current_dir=$(pwd -P)
+    if [[ $current_dir == "$matching_root" || $current_dir == "$matching_root/"* ]]; then
+        error 'leave this worktree before removing it'
+    fi
+    git -C "$primary_root" worktree remove "$matching_root"
+    if $remove_branch; then
+        git -C "$primary_root" branch -D "$branch" >&2
+    fi
+}
+
+command_name=${1-}
+if (( $# )); then shift; fi
+case $command_name in
+    new) new_worktree "$@" ;;
+    remove|rm) remove_worktree "$@" ;;
+    list|ls)
+        if (( $# )); then
+            [[ $# == 1 && ( $1 == -h || $1 == --help ) ]] && { usage; exit 0; }
+            error 'list takes no arguments'
+        fi
+        list_worktrees
+        ;;
+    -h|--help|help) usage ;;
+    '') usage; exit 2 ;;
+    *) error "unknown command: $command_name" ;;
+esac

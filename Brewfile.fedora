@@ -3,7 +3,7 @@ brew "bun"
 brew "dive"
 brew "fish"
 brew "fisher"
-brew "herdr"
+brew "herdr", start_service: true
 brew "kube-linter"
 brew "kubectx"
 brew "lazygit"

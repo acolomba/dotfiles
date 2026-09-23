@@ -23,7 +23,7 @@ brew "git-delta"
 brew "git-lfs"
 brew "glow"
 brew "helm"
-brew "herdr"
+brew "herdr", start_service: true
 brew "hyperfine"
 brew "iperf3"
 brew "jq"
