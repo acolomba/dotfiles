@@ -1,0 +1,17 @@
+{{- $bazzite := false -}}
+{{- if eq .chezmoi.os "linux" -}}
+{{-   $bazzite = eq (dig "id" "" .chezmoi.osRelease) "bazzite" -}}
+{{- end -}}
+if test -x /opt/homebrew/bin/brew
+    eval $(/opt/homebrew/bin/brew shellenv fish)
+    set -gx HOMEBREW_NO_ASK 1
+else if test -x /home/linuxbrew/.linuxbrew/bin/brew
+{{- if $bazzite }}
+    # Bazzite: keep brew after system binaries, like /etc/profile.d/brew.sh
+    eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv fish | string match --invert --regex '^fish_add_path')
+    fish_add_path --global --append --path $HOMEBREW_PREFIX/bin $HOMEBREW_PREFIX/sbin
+{{- else }}
+    eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv fish)
+{{- end }}
+    set -gx HOMEBREW_NO_ASK 1
+end

@@ -1,0 +1,24 @@
+{{- $bazzite := false -}}
+{{- if eq .chezmoi.os "linux" -}}
+{{-   $bazzite = eq (dig "id" "" .chezmoi.osRelease) "bazzite" -}}
+{{- end -}}
+# homebrew
+if [[ -x /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv bash)"
+    export HOMEBREW_NO_ASK=1
+elif [[ -x /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+{{- if $bazzite }}
+    # Bazzite: keep brew after system binaries, like /etc/profile.d/brew.sh
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash | grep -v '^export PATH=')"
+    [[ ":$PATH:" == *":$HOMEBREW_PREFIX/bin:"* ]] || export PATH="$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin"
+{{- else }}
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
+{{- end }}
+    export HOMEBREW_NO_ASK=1
+fi
+
+# shellcheck source=/dev/null
+[[ -f ~/.bashrc ]] && . ~/.bashrc
+
+# shellcheck source=/dev/null
+[[ -r ~/.bash_profile-local ]] && . ~/.bash_profile-local

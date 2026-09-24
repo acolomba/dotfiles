@@ -1,5 +1,0 @@
-# shellcheck source=/dev/null
-[[ -f ~/.bashrc ]] && . ~/.bashrc
-
-# shellcheck source=/dev/null
-[[ -r ~/.bash_profile-local ]] && . ~/.bash_profile-local
