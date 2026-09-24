@@ -154,6 +154,8 @@ promptinit
 if (( ${prompt_themes[(Ie)pure]} )); then
     prompt_newline=' '
     prompt pure
+    # Drop Pure's hardcoded blank line before each prompt.
+    functions[prompt_pure_preprompt_render]=${functions[prompt_pure_preprompt_render]/$'then\n\t\tprint\n'/$'then\n\t\t:\n'}
 else
     # Previous built-in zsh prompt: host:path on the left, Git on the right.
     autoload -U colors && colors
