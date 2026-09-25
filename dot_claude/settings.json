@@ -22,8 +22,9 @@
   "skipDangerousModePermissionPrompt": true,
   "spinnerTipsEnabled": false,
   "statusLine": {
-    "command": "npx -y ccstatusline@latest",
+    "command": "ccstatusline",
     "padding": 0,
+    "refreshInterval": 15,
     "type": "command"
   },
   "theme": "auto",
