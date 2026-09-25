@@ -42,17 +42,17 @@
     [
       {
         "color": "blue",
-        "id": "f6fe4a62-b78d-43f3-bf12-38191c4fc002",
-        "type": "session-usage"
-      },
-      {
-        "color": "blue",
         "id": "4c1d2e0a-7b9f-4f3e-9a51-2d6c8e0b7f13",
         "metadata": {
           "cursor": "true",
           "display": "progress-short"
         },
         "type": "weekly-usage"
+      },
+      {
+        "color": "blue",
+        "id": "f6fe4a62-b78d-43f3-bf12-38191c4fc002",
+        "type": "session-usage"
       },
       {
         "color": "brightBlack",
