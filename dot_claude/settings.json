@@ -2,12 +2,21 @@
   "agentPushNotifEnabled": true,
   "autoDreamEnabled": true,
   "autoUpdatesChannel": "stable",
-  "effortLevel": "xhigh",
-  "model": "opus[1m]",
+  "enabledPlugins": {},
+  "model": "opus",
+  "modelSettings": {
+    "claude-opus-5-5": {
+      "effortLevel": "medium"
+    },
+    "claude-sonnet-5": {
+      "effortLevel": "high"
+    }
+  },
   "outputStyle": "Concise",
   "permissions": {
     "defaultMode": "auto"
   },
+  "pluginConfigs": {},
   "promptSuggestionEnabled": false,
   "remoteControlAtStartup": true,
   "skipDangerousModePermissionPrompt": true,
