@@ -141,7 +141,7 @@ command -v zoxide &>/dev/null && eval "$(zoxide init --cmd j bash)"
 if (( BASH_VERSINFO[0] >= 4 )) && [[ -z ${BASH_COMPLETION_VERSINFO-} ]]; then
     case $(uname) in
         Darwin)
-            [[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]] && . "$(brew --prefix)/etc/profile.d/bash_completion.sh"
+            [[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && . "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
             ;;
 
         Linux)
