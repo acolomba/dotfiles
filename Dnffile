@@ -3,7 +3,6 @@ bash-completion
 chezmoi
 cloc
 curl
-diff-so-fancy
 diffoscope
 direnv
 du-dust
