@@ -4,5 +4,11 @@ sudo: false
 current_host: false
 data:
   com.apple.assistant.support:
-    # Siri → Enable Ask Siri (deselect)
-    "Assistant Enabled": false
+    # Siri → Enable Ask Siri (select)
+    "Assistant Enabled": true
+
+  com.apple.symbolichotkeys:
+    AppleSymbolicHotKeys:
+      # 263 = Screenshots → Ask Siri about active window (⇧⌘Space)
+      "263":
+        enabled: false

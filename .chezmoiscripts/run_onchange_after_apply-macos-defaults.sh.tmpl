@@ -43,6 +43,11 @@ fi
 for proc in Dock Finder SystemUIServer ControlCenter cfprefsd; do
     killall "${proc}" >/dev/null 2>&1 || true
 done
+
+# Siri → Siri AI (select). Not in siri.yaml: Siri AI ignores macos-defaults' direct
+# plist writes, so write through cfprefsd and notify it to switch modes
+defaults write com.apple.assistant.backedup "Enable Offline Mode For Apple Intelligence" -bool false
+notifyutil -p com.apple.siri.appleIntelligenceFallback.didChange
 {{- else -}}
 exit 0
 {{- end }}
