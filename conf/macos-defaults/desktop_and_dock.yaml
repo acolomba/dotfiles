@@ -10,9 +10,9 @@ data:
     show-recents: false
     # Mission Control → Automatically rearrange Spaces based on most recent use (deselect)
     mru-spaces: false
-    # Hot Corners → Bottom Left → Desktop (corner action 4 = Desktop)
-    wvous-bl-corner: 4
-    wvous-bl-modifier: 0
+    # Hot Corners → Bottom Right → - (corner action 1 = none; default is Quick Note)
+    wvous-br-corner: 1
+    wvous-br-modifier: 0
     # Dock size locked at 48
     tilesize: 48
     size-immutable: true
