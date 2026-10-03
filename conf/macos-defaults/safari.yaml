@@ -14,8 +14,11 @@ data:
     AutoFillFromAddressBook: false
     AutoFillCreditCardData: false
     AutoFillMiscellaneousForms: false
-    # Search → Search Engine → DuckDuckGo
-    SearchProviderShortName: "DuckDuckGo"
+    # Search → Search Engine → Google
+    SearchProviderShortName: "Google"
+    # Search → Private Browsing search engine → DuckDuckGo
+    PrivateSearchEngineUsesNormalSearchEngineToggle: false
+    PrivateSearchProviderShortName: "DuckDuckGo"
     # Search → Smart Search Field → Preload Top Hit in the background (deselect)
     PreloadTopHit: false
     # View → Show Favorites Bar
