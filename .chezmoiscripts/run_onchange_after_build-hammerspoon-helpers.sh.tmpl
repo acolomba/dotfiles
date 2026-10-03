@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+{{ if eq .chezmoi.os "darwin" -}}
+set -euo pipefail
+
+lua_headers=/Applications/Hammerspoon.app/Contents/Frameworks/LuaSkin.framework/Headers
+
+if ! command -v clang >/dev/null 2>&1 || [[ ! -d "${lua_headers}" ]]; then
+    echo "clang or Hammerspoon not found; skipping Hammerspoon helpers" >&2
+    exit 0
+fi
+
+clang -O2 -Wall -Wno-deprecated-declarations -bundle -undefined dynamic_lookup -I "${lua_headers}" \
+    -framework ApplicationServices -framework IOKit \
+    -o "${HOME}/.hammerspoon/hover_top_edge.so" -x c - <<'C'
+// Lua module: require("hover_top_edge")(x, y) moves the pointer to (x, y) and straight back,
+// through the window server and the HID system as BetterTouchTool does, without freezing the real mouse
+#include <ApplicationServices/ApplicationServices.h>
+#include <IOKit/hidsystem/IOHIDLib.h>
+#include <lauxlib.h>
+#include <lua.h>
+
+extern int _CGSDefaultConnection(void);
+extern CGError CGSWarpCursorPosition(int cid, float x, float y);
+
+static io_connect_t hid;
+
+static void moveTo(CGPoint p) {
+    CGSWarpCursorPosition(_CGSDefaultConnection(), p.x, p.y);
+    IOHIDSetMouseLocation(hid, (int)p.x, (int)p.y);
+}
+
+static int hover(lua_State *L) {
+    CGPoint top = CGPointMake(luaL_checknumber(L, 1), luaL_checknumber(L, 2));
+    CGEventRef event = CGEventCreate(NULL);
+    CGPoint pos = CGEventGetLocation(event);
+    CFRelease(event);
+    moveTo(top);
+    moveTo(pos);
+    return 0;
+}
+
+int luaopen_hover_top_edge(lua_State *L) {
+    // Don't suppress the real mouse after the moves, as BetterTouchTool does
+    CGSetLocalEventsSuppressionInterval(0);
+    CGSetLocalEventsFilterDuringSuppressionState(kCGEventFilterMaskPermitAllEvents,
+                                                 kCGEventSuppressionStateSuppressionInterval);
+    CGSetLocalEventsFilterDuringSuppressionState(kCGEventFilterMaskPermitAllEvents,
+                                                 kCGEventSuppressionStateRemoteMouseDrag);
+
+    if (!hid) {
+        io_service_t service =
+            IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching(kIOHIDSystemClass));
+        kern_return_t kr = IOServiceOpen(service, mach_task_self(), kIOHIDParamConnectType, &hid);
+        IOObjectRelease(service);
+        if (kr != KERN_SUCCESS) return luaL_error(L, "can't open IOHIDSystem: 0x%x", kr);
+    }
+    lua_pushcfunction(L, hover);
+    return 1;
+}
+C
+{{- else -}}
+exit 0
+{{- end }}
