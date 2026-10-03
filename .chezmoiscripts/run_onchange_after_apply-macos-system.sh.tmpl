@@ -25,12 +25,6 @@ disable_spotlight_indexing() {
 }
 step "Spotlight exclusions" disable_spotlight_indexing
 
-# Energy Saver — prevent system sleep on AC when display is off.
-prevent_ac_sleep() {
-    sudo pmset -c sleep 0
-}
-step "Prevent sleep on AC" prevent_ac_sleep
-
 # Caps Lock → Control, scoped to Apple keyboards (VendorID 0x05ac).
 # hidutil mappings are session-only; reapplied on next chezmoi apply
 # after reboot. For boot-time persistence, install a LaunchAgent.
