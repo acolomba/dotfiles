@@ -10,9 +10,8 @@ data:
     NewTabBehavior: 1
     # General → Homepage (blank)
     HomePage: ""
-    # AutoFill → disable all
+    # AutoFill → disable all but passwords
     AutoFillFromAddressBook: false
-    AutoFillPasswords: false
     AutoFillCreditCardData: false
     AutoFillMiscellaneousForms: false
     # Search → Search Engine → DuckDuckGo
