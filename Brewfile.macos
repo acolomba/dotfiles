@@ -1,4 +1,5 @@
 tap "dsully/tap", trusted: true
+tap "IohannRabeson/tap", trusted: true
 brew "bash"
 brew "bash-completion@2"
 brew "biome"
@@ -46,6 +47,7 @@ brew "python3"
 brew "ripgrep"
 brew "sd"
 brew "screen"
+brew "tmignore-rs", start_service: true
 brew "tmux"
 brew "tree"
 brew "uv"

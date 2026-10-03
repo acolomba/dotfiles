@@ -1,0 +1,7 @@
+{
+  "debounce_duration": "2s",
+  "ignored_directories": [],
+  "search_directories": ["~/src"],
+  "threads": 4,
+  "whitelist_patterns": ["*/.env", "*/.claude/settings.local.json"]
+}
