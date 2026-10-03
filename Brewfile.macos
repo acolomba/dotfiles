@@ -89,13 +89,16 @@ cask "visual-studio-code"
 cask "zoom"
 mas "1Blocker", id: 1365531024
 mas "1Password for Safari", id: 1569813296
+mas "Amphetamine", id: 937984704
 mas "Calca", id: 635758264
 mas "Cookie", id: 6452017315
+mas "DaisyDisk", id: 411643860
 mas "Dark Reader for Safari", id: 1438243180
 mas "HazeOver", id: 430798174
 mas "Hush", id: 1544743900
 mas "Ivory", id: 6444602274
 mas "Kindle", id: 302584613
+mas "Litterbox", id: 6805719216
 mas "MacPacker", id: 6473273874
 mas "Noir", id: 1592917505
 mas "Paste", id: 967805235
@@ -106,6 +109,8 @@ mas "SponsorBlock", id: 1573461917
 mas "StopTheMadness Pro", id: 6471380298
 mas "StopTheScript", id: 1588394487
 mas "Telegram", id: 747648890
+mas "Unforgetful", id: 6785630295
+mas "WireGuard", id: 1451685025
 mas "Xcode", id: 497799835
 vscode "davidanson.vscode-markdownlint"
 vscode "editorconfig.editorconfig"
