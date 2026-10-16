@@ -1,21 +1,29 @@
 {{- $bazzite := false -}}
+{{- $truenas := false -}}
 {{- if eq .chezmoi.os "linux" -}}
 {{-   $bazzite = eq (dig "id" "" .chezmoi.osRelease) "bazzite" -}}
+{{-   $truenas = and (eq (dig "id" "" .chezmoi.osRelease) "debian") (contains "truenas" (dig "osrelease" "" .chezmoi.kernel)) -}}
 {{- end -}}
 # homebrew
-if [[ -x /opt/homebrew/bin/brew ]]; then
-    eval "$(/opt/homebrew/bin/brew shellenv bash)"
-    export HOMEBREW_NO_ASK=1
-elif [[ -x /home/linuxbrew/.linuxbrew/bin/brew ]]; then
-{{- if $bazzite }}
-    # Bazzite: keep brew after system binaries, like /etc/profile.d/brew.sh
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash | grep -v '^export PATH=')"
-    [[ ":$PATH:" == *":$HOMEBREW_PREFIX/bin:"* ]] || export PATH="$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin"
+{{- if eq .chezmoi.os "darwin" }}
+eval "$(/opt/homebrew/bin/brew shellenv bash)"
+export HOMEBREW_NO_ASK=1
+{{- else if $bazzite }}
+# Bazzite: keep brew after system binaries, like /etc/profile.d/brew.sh
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash | grep -v '^export PATH=')"
+[[ ":$PATH:" == *":$HOMEBREW_PREFIX/bin:"* ]] || export PATH="$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin"
+export HOMEBREW_NO_ASK=1
+{{- else if $truenas }}
+# TrueNAS: homebrew lives in the home dir; keep it after system binaries
+eval "$(~/.brew/bin/brew shellenv bash | grep -v '^export PATH=')"
+[[ ":$PATH:" == *":$HOMEBREW_PREFIX/bin:"* ]] || export PATH="$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin"
+export HOMEBREW_NO_ASK=1
 {{- else }}
+if [[ -x /home/linuxbrew/.linuxbrew/bin/brew ]]; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
-{{- end }}
     export HOMEBREW_NO_ASK=1
 fi
+{{- end }}
 
 # shellcheck source=/dev/null
 [[ -f ~/.bashrc ]] && . ~/.bashrc

@@ -1,0 +1,9 @@
+{{ if and (eq .chezmoi.os "linux") (eq (dig "id" "" .chezmoi.osRelease) "debian") (contains "truenas" (dig "osrelease" "" .chezmoi.kernel)) -}}
+#!/usr/bin/env bash
+# Brewfile.truenas hash: {{ include "Brewfile.truenas" | sha256sum }}
+
+# TrueNAS: homebrew lives in the home dir, since /home/linuxbrew isn't available;
+# the prefix must be <= 26 bytes (/home/linuxbrew/.linuxbrew) for bottles to relocate
+[[ -d ~/.brew ]] || git clone https://github.com/Homebrew/brew ~/.brew
+~/.brew/bin/brew bundle --file ~/.local/share/chezmoi/Brewfile.truenas
+{{- end }}

@@ -3,6 +3,7 @@ Aptfile
 Brewfile.macos
 Brewfile.bazzite
 Brewfile.fedora
+Brewfile.truenas
 Dnffile
 README.md
 biome.json
