@@ -20,7 +20,18 @@
       {
         "color": "brightBlack",
         "id": "3",
-        "type": "context-percentage-usable"
+        "metadata": {
+          "display": "slider"
+        },
+        "type": "context-bar"
+      },
+      {
+        "color": "yellow",
+        "id": "d5265158-8394-4627-9d6a-44038ce34caa",
+        "metadata": {
+          "hide": "zero"
+        },
+        "type": "compaction-counter"
       },
       {
         "color": "magenta",
@@ -66,7 +77,7 @@
     "enabled": false,
     "endCaps": [],
     "separatorInvertBackground": [false],
-    "separators": [""],
+    "separators": ["\ue0b0"],
     "startCaps": [],
     "theme": "onedark"
   },
