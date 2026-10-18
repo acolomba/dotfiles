@@ -52,16 +52,15 @@ shopt -s cdspell
 # ls
 case $(uname) in
     Darwin)
-        export CLICOLOR_FORCE=1
         alias ls="\ls -bCFGh"
         alias ll="\ls -bCFGh -l"
         alias la="\ls -bCFGh -la"
         ;;
 
     Linux)
-        alias ls="\ls --color=always -bCFh"
-        alias ll="\ls --color=always -bCFh -l"
-        alias la="\ls --color=always -bCFh -la"
+        alias ls="\ls --color=auto -bCFh"
+        alias ll="\ls --color=auto -bCFh -l"
+        alias la="\ls --color=auto -bCFh -la"
         ;;
 esac
 

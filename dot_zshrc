@@ -49,16 +49,15 @@ fi
 # ls
 case $(uname) in
     Darwin)
-        export CLICOLOR_FORCE=1
         alias ls="\ls -bCFGh"
         alias ll="\ls -bCFGh -l"
         alias la="\ls -bCFGh -la"
         ;;
 
     Linux)
-        alias ls="\ls --color=always -bCFh"
-        alias ll="\ls --color=always -bCFh -l"
-        alias la="\ls --color=always -bCFh -la"
+        alias ls="\ls --color=auto -bCFh"
+        alias ll="\ls --color=auto -bCFh -l"
+        alias la="\ls --color=auto -bCFh -la"
         ;;
 esac
 
@@ -157,7 +156,6 @@ if (( ${prompt_themes[(Ie)pure]} )); then
     # drops pure's hardcoded blank line before each prompt.
     functions[prompt_pure_preprompt_render]=${functions[prompt_pure_preprompt_render]/$'then\n\t\tprint\n'/$'then\n\t\t:\n'}
 else
-    # Previous built-in zsh prompt: host:path on the left, Git on the right.
     autoload -U colors && colors
     PROMPT="%{$fg[red]%}%m%{$reset_color%}:%{$fg[blue]%}%~%{$reset_color%} %# "
     autoload -Uz vcs_info
