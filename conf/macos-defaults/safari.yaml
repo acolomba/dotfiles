@@ -4,8 +4,8 @@ sudo: false
 current_host: false
 data:
   com.apple.Safari:
-    # General → New windows open with: Empty Page (1)
-    NewWindowBehavior: 1
+    # General → New windows open with: Start Page (4)
+    NewWindowBehavior: 4
     # General → New tabs open with: Empty Page (1)
     NewTabBehavior: 1
     # General → Homepage (blank)
