@@ -1,5 +1,5 @@
 # history
-HISTSIZE=10000
+HISTSIZE=120000
 SAVEHIST=100000
 HISTFILE=~/.zsh_history
 setopt INC_APPEND_HISTORY
@@ -12,6 +12,7 @@ setopt HIST_IGNORE_SPACE
 setopt HIST_NO_STORE
 setopt CORRECT
 setopt INTERACTIVE_COMMENTS
+HISTORY_IGNORE='(bg|fg|exit|rm *)'
 
 # editing
 bindkey -e
@@ -19,9 +20,11 @@ autoload -U select-word-style
 select-word-style bash
 
 # completion
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'l:|=* r:|=*'
 zstyle ':completion:*' menu select=2
 zstyle ':completion:*' verbose yes
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format '%F{blue}%d%f'
 zstyle :compinstall filename "$HOME/.zshrc"
 
 # brew shellenv (in .zprofile) already adds share/zsh/site-functions
@@ -32,7 +35,7 @@ fi
 
 # path
 typeset -U path
-path=(~/.local/bin "$HOME/bin" $path)
+path=(~/.local/bin "$HOME/bin" ~/.bun/bin ~/go/bin ~/.npm-global/bin $path)
 export PATH
 
 autoload -Uz compinit && compinit
@@ -91,13 +94,17 @@ man() {
 
 # kubectl
 alias k=kubectl
+if command -v kubectl &>/dev/null; then
+    source <(kubectl completion zsh)
+    compdef k=kubectl
+fi
 
 # screen and tmux
 command -v screen &>/dev/null && alias scr="screen -d -RR"
 alias t="tmux new -A -D -s main"
 
 # prompt
-if [[ $TERM == "screen" ]]; then
+if [[ $TERM == screen* ]]; then
     _GET_PATH='echo $PWD | sed "s/^\/Users\//~/;s/^~$USER/~/"'
     TAB_TITLE_PREFIX='"`'$_GET_PATH' | sed "s:..*/::"`$PROMPT_CHAR"'
 
@@ -132,7 +139,7 @@ fi
 command -v zoxide &>/dev/null && eval "$(zoxide init --cmd j zsh)"
 
 # autosuggestions
-ZSH_AUTOSUGGEST_STRATEGY=(history)
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 if [[ -n $HOMEBREW_PREFIX && -f $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
     . $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 elif [[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
@@ -174,3 +181,6 @@ fi
 
 # sources local zshrc
 [[ -f ~/.zsh/zshrc-local.zsh ]] && . ~/.zsh/zshrc-local.zsh
+
+# dedups path
+path=($path)
