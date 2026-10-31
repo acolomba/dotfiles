@@ -36,6 +36,13 @@ static int hover(lua_State *L) {
     CGPoint pos = CGEventGetLocation(event);
     CFRelease(event);
     moveTo(top);
+    // Nudge the pointer with a real HID mouse-moved event, as BetterTouchTool does: since macOS 27.2
+    // the Dock ignores warps alone
+    NXEventData data = {0};
+    data.mouseMove.dx = 10;
+    IOGPoint delta = {10, 0};
+    IOHIDPostEvent(hid, NX_MOUSEMOVED, delta, &data, kNXEventDataVersion, 0,
+                   kIOHIDSetRelativeCursorPosition);
     moveTo(pos);
     return 0;
 }
