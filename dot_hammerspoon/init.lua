@@ -3,48 +3,53 @@ local function mediaKey(key)
     hs.eventtap.event.newSystemKeyEvent(key, false):post()
 end
 
--- Mute with F10
-muteHotkey = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, function(event)
-    if event:getKeyCode() == 109 then -- F10
-        mediaKey("MUTE")
+local function music(command)
+    hs.osascript.applescript('tell application "Music" to ' .. command)
+end
+
+-- Apple keyboard layout for keyboards that send plain F-keys (MacBook Pro top row)
+local fKeyActions = {
+    [122] = function() mediaKey("BRIGHTNESS_DOWN") end,                  -- F1
+    [120] = function() mediaKey("BRIGHTNESS_UP") end,                    -- F2
+    [99] = function() hs.spaces.toggleMissionControl() end,              -- F3
+    [118] = function() hs.eventtap.keyStroke({ "cmd" }, "space", 0) end, -- F4: Spotlight
+    [98] = function() music("previous track") end,                       -- F7
+    [100] = function() music("playpause") end,                           -- F8
+    [101] = function() music("next track") end,                          -- F9
+    [109] = function() mediaKey("MUTE") end,                             -- F10
+    [103] = function() mediaKey("SOUND_DOWN") end,                       -- F11
+    [111] = function() mediaKey("SOUND_UP") end,                         -- F12
+}
+
+fKeyHotkey = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, function(event)
+    local action = fKeyActions[event:getKeyCode()]
+
+    if action then
+        action()
         return true
     end
 
     return false
 end):start()
 
--- Volume down with F11
-soundDownHotkey = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, function(event)
-    if event:getKeyCode() == 103 then -- F11
-        mediaKey("SOUND_DOWN")
-        return true
-    end
+-- Media keys (F7, F8, F9 on Apple keyboards) control Music only, not the system's Now Playing app
+local musicKeyCommands = {
+    PREVIOUS = "previous track",
+    REWIND = "previous track",
+    PLAY = "playpause",
+    NEXT = "next track",
+    FAST = "next track",
+}
 
-    return false
-end):start()
+musicMediaKeyHotkey = hs.eventtap.new({ hs.eventtap.event.types.systemDefined }, function(event)
+    local key = event:systemKey()
+    local command = musicKeyCommands[key.key]
 
--- Volume up with F12
-soundUpHotkey = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, function(event)
-    if event:getKeyCode() == 111 then -- F12
-        mediaKey("SOUND_UP")
-        return true
-    end
+    if command then
+        if key.down and not key["repeat"] then
+            music(command)
+        end
 
-    return false
-end):start()
-
--- Music previous track, play/pause and next track with F7, F8 and F9
-musicControlHotkey = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, function(event)
-    local code = event:getKeyCode()
-
-    if code == 98 then      -- F7
-        hs.osascript.applescript('tell application "Music" to previous track')
-        return true
-    elseif code == 100 then -- F8
-        hs.osascript.applescript('tell application "Music" to playpause')
-        return true
-    elseif code == 101 then -- F9
-        hs.osascript.applescript('tell application "Music" to next track')
         return true
     end
 

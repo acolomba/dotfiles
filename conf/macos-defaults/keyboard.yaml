@@ -13,3 +13,6 @@ data:
 
     # Keyboard → Shortcuts → Full Keyboard Access → All controls
     AppleKeyboardUIMode: 3
+
+    # Keyboard → Shortcuts → Function Keys → Use F1, F2, etc. keys as standard function keys
+    com.apple.keyboard.fnState: false
