@@ -15,16 +15,11 @@
   },
   "outputStyle": "Concise",
   "permissions": {
-    "blockReadsOutsideWorkingDirectories": true,
-    "blockWritesOutsideWorkingDirectories": true,
     "defaultMode": "auto"
   },
   "pluginConfigs": {},
   "promptSuggestionEnabled": false,
   "remoteControlAtStartup": true,
-  "sandbox": {
-    "enabled": true
-  },
   "skipDangerousModePermissionPrompt": true,
   "spinnerTipsEnabled": false,
   "statusLine": {
